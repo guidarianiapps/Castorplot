@@ -2,13 +2,12 @@ import pandas as pd
 import plotly.graph_objects as go
 from BaselineRemoval import BaselineRemoval
 import streamlit as st
-import os
 import numpy as np
 
 
 def plot_dados(uploaded_files, fig, lista_removal_baseline):
     for index_lista in range(len(lista_removal_baseline)):
-        arquivo, extensao = os.path.splitext(uploaded_files[index_lista].name)
+        arquivo = uploaded_files[index_lista].name[:-4]
         fig = fig.add_trace(
             go.Scatter(
                 x=lista_removal_baseline[index_lista]["x"],

@@ -1,1 +1,1 @@
-# app_espectrometria
+# app_equipamentos

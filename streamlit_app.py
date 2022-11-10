@@ -38,7 +38,7 @@ uploaded_files = st.file_uploader(
 )
 with open("dados\GO_exemplo.txt", "rb") as file:
     st.download_button("Exemplo de arquivo",file,file_name="arquivo_exemplo.txt")
-
+    
 if uploaded_files == []: ## Esperar algum arquivo
     st.stop()
 

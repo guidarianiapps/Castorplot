@@ -36,9 +36,7 @@ st.write("### Coloque os arquivos renomeados com o nome da legenda de cada arqui
 uploaded_files = st.file_uploader(
     "Coloque os dados txt aqui", accept_multiple_files=True
 )
-with open("dados\GO_exemplo.txt", "rb") as file:
-    st.download_button("Exemplo de arquivo",file,file_name="arquivo_exemplo.txt")
-    
+st.write("[Arquivo de exemplo](https://github.com/guilhermeilum/app_equipamentos/blob/testes/dados/GO_exemplo.txt)")
 if uploaded_files == []: ## Esperar algum arquivo
     st.stop()
 

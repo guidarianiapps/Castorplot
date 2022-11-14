@@ -111,6 +111,7 @@ st.write("## Plot dos dados trabalhados")
 st.write(
     "Agora é tirado a linha de base dos dados, utilizando a biblioteca BaselineReamoval, utilizando a função ZhangFit com parâmetros originais, para mais informações [site da biblioteca](https://pypi.org/project/BaselineRemoval/)."
 )
+st.write("A normalização apenas acha o y máximo dentro de um intervalo e divide os dados pelo valor máximo.")
 
 x_minimo_original = min([i["x"].values.min() for i in lista_dados])
 x_maximo_original = max([i["x"].values.max() for i in lista_dados])
@@ -200,7 +201,7 @@ with local_leg_col[1]:
         "Cordenada y da leganda de 0 a 1", min_value=0.0, max_value=1.0
     )
 
-st.write("Infelizmente algumas vezes é cortada,  a legenda, no último carácter, e não foi encontrado um jeito de correção simples, quando ocorrer o erro renomeie, o arquivo que está com o nome cortado, colocando 2 ou 3 espaços no final do nome do arquivo, obviamente antes da extensão do arquivo, provavelmente solucionará o problema.")
+st.write("Infelizmente a legenda algumas vezes é cortada no último carácter, e não foi encontrado um jeito de correção simples, quando ocorrer o erro renomeie, o arquivo que está com o nome cortado, colocando 2 ou 3 espaços no final do nome do arquivo, obviamente antes do ponto da extensão do arquivo, assim provavelmente solucionará o problema.")
 grafico_trabalhado.update_layout(
     title=titulo,
     title_x=0.5,

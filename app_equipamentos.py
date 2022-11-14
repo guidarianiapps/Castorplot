@@ -189,7 +189,7 @@ with local_leg_col[1]:
         "Cordenada y da leganda de 0 a 1", min_value=0.0, max_value=1.0
     )
 
-
+st.write("Infelizmente algumas vezes é cortada,  a legenda, no último carácter, e não foi encontrado um jeito de correção simples, quando ocorrer o erro renomeie, o arquivo que está com o nome cortado, colocando 2 ou 3 espaços no final do nome do arquivo, obviamente antes da extensão do arquivo, provavelmente solucionará o problema.")
 grafico_trabalhado.update_layout(
     title=titulo,
     title_x=0.5,

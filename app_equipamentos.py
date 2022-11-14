@@ -52,6 +52,17 @@ def juntar_df(uploaded_files, lista):
 @st.cache
 def convert_csv(df):
     return df.to_csv().encode("utf-8")
+#Contatos
+st.sidebar.title("Contato")
+
+st.sidebar.write("[Contacte-me](mailto:guidarianiapps@gmail.com)")
+st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
+st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
+st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
+st.sidebar.write("[Lattes](http://lattes.cnpq.br/4388577854566943)")
+
+st.sidebar.write("Autor: Guilherme Gurian Dariani")
+
 
 
 st.title("Raman, FTIR e UV-Vis")

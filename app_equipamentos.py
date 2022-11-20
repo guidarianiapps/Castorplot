@@ -1,3 +1,4 @@
+from faulthandler import disable
 import pandas as pd
 import plotly.graph_objects as go
 from BaselineRemoval import BaselineRemoval
@@ -31,8 +32,8 @@ def baseline_remov(lista_dados):
 def cortar_dados(lista_dados, x_minimo, x_maximo):
     lista_nova = []
     for df in lista_dados:
-        logic = df["x"] > x_minimo
-        logic1 = df["x"] < x_maximo
+        logic = df["x"] >= x_minimo
+        logic1 = df["x"] <= x_maximo
         df = df.loc[logic & logic1]
         lista_nova.append(df)
     lista_dados = lista_nova
@@ -153,8 +154,8 @@ coluna_salvar = st.columns(2)
 if normalizar:
     lista_nova_dados = []
     for df in lista_dados:
-        logic = df["x"] > x_min_norm
-        logic1 = df["x"] < x_max_norm
+        logic = df["x"] >= x_min_norm
+        logic1 = df["x"] <= x_max_norm
         valor_maximo = df.loc[logic & logic1]["y"].max()
         df["y"] = df["y"] / valor_maximo
         lista_nova_dados.append(df)
@@ -221,5 +222,32 @@ grafico_trabalhado.update_layout(
 if inverter:
     grafico_trabalhado.update_xaxes(autorange="reversed")
 
+coluna_transp = st.columns(3)
+with coluna_transp[0]:
+    borda_transp = st.checkbox("Borda transparente")
+    borda_bgcolor = st.color_picker("Escolha a cor da borda",value = "#FFFFFF",disabled =borda_transp)
+    if borda_transp:
+        borda_bgcolor = "rgba(0,0,0,0)"
+
+
+with coluna_transp[1]:
+    fundo_transp = st.checkbox("Fundo transparente")
+    bgcolor = st.color_picker("Escolha a cor do fundo do gráfico",value = "#5A9BC9",disabled =fundo_transp)
+    if fundo_transp:
+        bgcolor = "rgba(0,0,0,0)"
+
+        
+        
+with coluna_transp[2]:
+    if st.checkbox("Sem grid"):
+        grafico_trabalhado.update_xaxes(showgrid = False)
+        grafico_trabalhado.update_yaxes(showgrid = False)
+
+grafico_trabalhado.update_layout({
+            "paper_bgcolor": borda_bgcolor
+        })
+grafico_trabalhado.update_layout({
+            "plot_bgcolor": bgcolor
+        })
 
 st.plotly_chart(grafico_trabalhado, use_container_width=True)

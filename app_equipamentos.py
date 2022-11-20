@@ -61,7 +61,7 @@ def convert_csv(df):
 #Contatos
 st.sidebar.title("Contato")
 
-st.sidebar.write("[Email](mailto:guidarianiapps@gmail.com)")
+st.sidebar.write("[E-mail](mailto:guidarianiapps@gmail.com)")
 st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
 st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
 st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")

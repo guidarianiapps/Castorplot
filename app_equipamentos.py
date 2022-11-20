@@ -5,6 +5,11 @@ from BaselineRemoval import BaselineRemoval
 import streamlit as st
 
 
+# Dados da pagina
+st.set_page_config(page_title="CastorPlot")
+
+
+
 def plot_dados(uploaded_files, lista):
     fig = go.Figure()
     for index_lista in range(len(lista)):
@@ -66,7 +71,7 @@ st.sidebar.write("Autor: Guilherme Gurian Dariani")
 
 
 
-st.title("Raman, FTIR e UV-Vis")
+st.header("Um site para qualquer pessoa poder utilizar para efetuar um pré-tratamento rápido dos dados dos equipamentos e plotá-los.")
 st.write("### Coloque os arquivos renomeados com o nome da legenda de cada arquivo!!")
 coluna_dados = st.columns(2)
 with coluna_dados[0]:
@@ -222,7 +227,7 @@ grafico_trabalhado.update_layout(
 if inverter:
     grafico_trabalhado.update_xaxes(autorange="reversed")
 
-coluna_transp = st.columns(3)
+coluna_transp = st.columns(4)
 with coluna_transp[0]:
     borda_transp = st.checkbox("Borda transparente")
     borda_bgcolor = st.color_picker("Escolha a cor da borda",value = "#FFFFFF",disabled =borda_transp)
@@ -239,15 +244,18 @@ with coluna_transp[1]:
         
         
 with coluna_transp[2]:
+    txcolor = st.color_picker("Escolha a cor para o texto",value = "#000000")
+    
+    
+with coluna_transp[3]:
     if st.checkbox("Sem grid"):
         grafico_trabalhado.update_xaxes(showgrid = False)
         grafico_trabalhado.update_yaxes(showgrid = False)
 
 grafico_trabalhado.update_layout({
-            "paper_bgcolor": borda_bgcolor
-        })
-grafico_trabalhado.update_layout({
-            "plot_bgcolor": bgcolor
+            "paper_bgcolor": borda_bgcolor,
+            "plot_bgcolor": bgcolor,
+            "font_color": txcolor
         })
 
 st.plotly_chart(grafico_trabalhado, use_container_width=True)

@@ -237,7 +237,7 @@ with coluna_transp[0]:
 
 with coluna_transp[1]:
     fundo_transp = st.checkbox("Fundo transparente")
-    bgcolor = st.color_picker("Escolha a cor do fundo do gráfico",value = "#5A9BC9",disabled =fundo_transp)
+    bgcolor = st.color_picker("Escolha a cor do fundo do gráfico",value = "#CEDDFB",disabled =fundo_transp)
     if fundo_transp:
         bgcolor = "rgba(0,0,0,0)"
 

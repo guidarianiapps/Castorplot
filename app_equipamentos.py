@@ -61,13 +61,18 @@ def convert_csv(df):
 #Contatos
 st.sidebar.title("Contato")
 
+st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
 st.sidebar.write("[E-mail](mailto:guidarianiapps@gmail.com)")
 st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
 st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
 st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
-st.sidebar.write("[Currículo Lattes](http://lattes.cnpq.br/4388577854566943)")
+
+st.sidebar.write("[Mais contatos](https://linktr.ee/guidariani)")
+
 
 st.sidebar.write("Autor: Guilherme Gurian Dariani")
+
+st.sidebar.write("""Em nenhum caso o autor será responsável por quaisquer erros, resultados ou informações incorretas.""")
 
 
 
@@ -249,13 +254,18 @@ with coluna_transp[2]:
     
 with coluna_transp[3]:
     if st.checkbox("Sem grid"):
-        grafico_trabalhado.update_xaxes(showgrid = False)
-        grafico_trabalhado.update_yaxes(showgrid = False)
+        grade = False
+    else:
+        grade = True
+    grcolor = st.color_picker("Escolha a cor para a grade e eixos",value = "#FFFFFF")
+    grafico_trabalhado.update_xaxes(zerolinecolor = grcolor,showgrid = grade, gridcolor = grcolor)
+    grafico_trabalhado.update_yaxes(zerolinecolor = grcolor,showgrid = grade, gridcolor = grcolor)
 
 grafico_trabalhado.update_layout({
             "paper_bgcolor": borda_bgcolor,
             "plot_bgcolor": bgcolor,
-            "font_color": txcolor
+            "font_color": txcolor, 
+            
         })
 
 st.plotly_chart(grafico_trabalhado, use_container_width=True)

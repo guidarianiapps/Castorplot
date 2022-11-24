@@ -61,12 +61,20 @@ def convert_csv(df):
 #Contatos
 st.sidebar.title("Contato")
 
+<<<<<<< HEAD
 st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
 st.sidebar.write("[Contacte-me](mailto:guidarianiapps@gmail.com)")
 st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
 st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
 st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
 st.sidebar.write("[Mais contatos](https://linktr.ee/guidariani)")
+=======
+st.sidebar.write("[E-mail](mailto:guidarianiapps@gmail.com)")
+st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
+st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
+st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
+st.sidebar.write("[Currículo Lattes](http://lattes.cnpq.br/4388577854566943)")
+>>>>>>> 5e662aac68fc7883963c1490221c6ca3024b7093
 
 st.sidebar.write("Autor: Guilherme Gurian Dariani")
 

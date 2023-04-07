@@ -9,7 +9,6 @@ import streamlit as st
 st.set_page_config(page_title="CastorPlot")
 
 
-
 def plot_dados(uploaded_files, lista):
     fig = go.Figure()
     for index_lista in range(len(lista)):
@@ -58,7 +57,9 @@ def juntar_df(uploaded_files, lista):
 @st.cache
 def convert_csv(df):
     return df.to_csv().encode("utf-8")
-#Contatos
+
+
+# Contatos
 st.sidebar.title("Contato")
 
 st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
@@ -72,11 +73,14 @@ st.sidebar.write("[Mais contatos](https://linktr.ee/guidariani)")
 
 st.sidebar.write("Autor: Guilherme Gurian Dariani")
 
-st.sidebar.write("""Em nenhum caso o autor será responsável por quaisquer erros, resultados ou informações incorretas.""")
+st.sidebar.write(
+    """Em nenhum caso o autor será responsável por quaisquer erros, resultados ou informações incorretas."""
+)
 
 
-
-st.header("Um site para qualquer pessoa poder utilizar para efetuar um pré-tratamento rápido dos dados dos equipamentos e plotá-los.")
+st.header(
+    "Um site para qualquer pessoa poder utilizar para efetuar um pré-tratamento rápido dos dados dos equipamentos e plotá-los."
+)
 st.write("### Coloque os arquivos renomeados com o nome da legenda de cada arquivo!!")
 coluna_dados = st.columns(2)
 with coluna_dados[0]:
@@ -84,9 +88,11 @@ with coluna_dados[0]:
         "Coloque os dados txt aqui", accept_multiple_files=True
     )
 with coluna_dados[1]:
-    cabecalho = int(st.number_input(
-        "Coloque a quantidade de linhas do cabeçalho que deseja ignorar.", value=0
-    ))
+    cabecalho = int(
+        st.number_input(
+            "Coloque a quantidade de linhas do cabeçalho que deseja ignorar.", value=0
+        )
+    )
     delimitador = st.text_input("Escreva o delimitador.", value="\t")
     st.write(
         "O delimitador deve ser escrito como delimitador da biblioteca pandas, por padrão separa por espaço."
@@ -122,7 +128,9 @@ st.write("## Plot dos dados trabalhados")
 st.write(
     "Agora é tirado a linha de base dos dados, utilizando a biblioteca BaselineReamoval, utilizando a função ZhangFit com parâmetros originais, para mais informações [site da biblioteca](https://pypi.org/project/BaselineRemoval/)."
 )
-st.write("A normalização apenas acha o y máximo dentro de um intervalo e divide os dados pelo valor máximo.")
+st.write(
+    "A normalização apenas acha o y máximo dentro de um intervalo e divide os dados pelo valor máximo."
+)
 
 x_minimo_original = min([i["x"].values.min() for i in lista_dados])
 x_maximo_original = max([i["x"].values.max() for i in lista_dados])
@@ -212,7 +220,9 @@ with local_leg_col[1]:
         "Cordenada y da leganda de 0 a 1", min_value=0.0, max_value=1.0
     )
 
-st.write("Infelizmente a legenda algumas vezes é cortada no último carácter, e não foi encontrado um jeito de correção simples, quando ocorrer o erro renomeie, o arquivo que está com o nome cortado, colocando 2 ou 3 espaços no final do nome do arquivo, obviamente antes do ponto da extensão do arquivo, assim provavelmente solucionará o problema.")
+st.write(
+    "Infelizmente a legenda algumas vezes é cortada no último carácter, e não foi encontrado um jeito de correção simples, quando ocorrer o erro renomeie, o arquivo que está com o nome cortado, colocando 2 ou 3 espaços no final do nome do arquivo, obviamente antes do ponto da extensão do arquivo, assim provavelmente solucionará o problema."
+)
 grafico_trabalhado.update_layout(
     title=titulo,
     title_x=0.5,
@@ -235,37 +245,45 @@ if inverter:
 coluna_transp = st.columns(4)
 with coluna_transp[0]:
     borda_transp = st.checkbox("Borda transparente")
-    borda_bgcolor = st.color_picker("Escolha a cor da borda",value = "#FFFFFF",disabled =borda_transp)
+    borda_bgcolor = st.color_picker(
+        "Escolha a cor da borda", value="#FFFFFF", disabled=borda_transp
+    )
     if borda_transp:
         borda_bgcolor = "rgba(0,0,0,0)"
 
 
 with coluna_transp[1]:
     fundo_transp = st.checkbox("Fundo transparente")
-    bgcolor = st.color_picker("Escolha a cor do fundo do gráfico",value = "#CEDDFB",disabled =fundo_transp)
+    bgcolor = st.color_picker(
+        "Escolha a cor do fundo do gráfico", value="#CEDDFB", disabled=fundo_transp
+    )
     if fundo_transp:
         bgcolor = "rgba(0,0,0,0)"
 
-        
-        
+
 with coluna_transp[2]:
-    txcolor = st.color_picker("Escolha a cor para o texto",value = "#000000")
-    
-    
+    txcolor = st.color_picker("Escolha a cor para o texto", value="#000000")
+
+
 with coluna_transp[3]:
     if st.checkbox("Sem grid"):
         grade = False
     else:
         grade = True
-    grcolor = st.color_picker("Escolha a cor para a grade e eixos",value = "#FFFFFF")
-    grafico_trabalhado.update_xaxes(zerolinecolor = grcolor,showgrid = grade, gridcolor = grcolor)
-    grafico_trabalhado.update_yaxes(zerolinecolor = grcolor,showgrid = grade, gridcolor = grcolor)
+    grcolor = st.color_picker("Escolha a cor para a grade e eixos", value="#FFFFFF")
+    grafico_trabalhado.update_xaxes(
+        zerolinecolor=grcolor, showgrid=grade, gridcolor=grcolor
+    )
+    grafico_trabalhado.update_yaxes(
+        zerolinecolor=grcolor, showgrid=grade, gridcolor=grcolor
+    )
 
-grafico_trabalhado.update_layout({
-            "paper_bgcolor": borda_bgcolor,
-            "plot_bgcolor": bgcolor,
-            "font_color": txcolor, 
-            
-        })
+grafico_trabalhado.update_layout(
+    {
+        "paper_bgcolor": borda_bgcolor,
+        "plot_bgcolor": bgcolor,
+        "font_color": txcolor,
+    }
+)
 
 st.plotly_chart(grafico_trabalhado, use_container_width=True)

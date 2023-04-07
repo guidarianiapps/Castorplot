@@ -84,9 +84,9 @@ with coluna_dados[0]:
         "Coloque os dados txt aqui", accept_multiple_files=True
     )
 with coluna_dados[1]:
-    cabecalho = st.number_input(
+    cabecalho = int(st.number_input(
         "Coloque a quantidade de linhas do cabeçalho que deseja ignorar.", value=0
-    )
+    ))
     delimitador = st.text_input("Escreva o delimitador.", value="\t")
     st.write(
         "O delimitador deve ser escrito como delimitador da biblioteca pandas, por padrão separa por espaço."
@@ -94,7 +94,7 @@ with coluna_dados[1]:
     separador_decimal = st.text_input("Escreva o separador decimal", value=".")
     if delimitador == "":
         delimitador = "\t"
-if uploaded_files == []:  ## Esperar algum arquivo
+if uploaded_files == [] or uploaded_files is None:  ## Esperar algum arquivo
     st.stop()
 else:
     lista_dados = []

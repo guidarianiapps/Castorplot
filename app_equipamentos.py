@@ -1,7 +1,13 @@
+from faulthandler import disable
 import pandas as pd
 import plotly.graph_objects as go
 from BaselineRemoval import BaselineRemoval
 import streamlit as st
+
+
+# Dados da pagina
+st.set_page_config(page_title="CastorPlot")
+
 
 
 def plot_dados(uploaded_files, lista):
@@ -31,8 +37,8 @@ def baseline_remov(lista_dados):
 def cortar_dados(lista_dados, x_minimo, x_maximo):
     lista_nova = []
     for df in lista_dados:
-        logic = df["x"] > x_minimo
-        logic1 = df["x"] < x_maximo
+        logic = df["x"] >= x_minimo
+        logic1 = df["x"] <= x_maximo
         df = df.loc[logic & logic1]
         lista_nova.append(df)
     lista_dados = lista_nova
@@ -55,17 +61,22 @@ def convert_csv(df):
 #Contatos
 st.sidebar.title("Contato")
 
-st.sidebar.write("[Email](mailto:guidarianiapps@gmail.com)")
+st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
+st.sidebar.write("[E-mail](mailto:guidarianiapps@gmail.com)")
 st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
 st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
 st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
-st.sidebar.write("[Currículo Lattes](http://lattes.cnpq.br/4388577854566943)")
+
+st.sidebar.write("[Mais contatos](https://linktr.ee/guidariani)")
+
 
 st.sidebar.write("Autor: Guilherme Gurian Dariani")
 
+st.sidebar.write("""Em nenhum caso o autor será responsável por quaisquer erros, resultados ou informações incorretas.""")
 
 
-st.title("Raman, FTIR e UV-Vis")
+
+st.header("Um site para qualquer pessoa poder utilizar para efetuar um pré-tratamento rápido dos dados dos equipamentos e plotá-los.")
 st.write("### Coloque os arquivos renomeados com o nome da legenda de cada arquivo!!")
 coluna_dados = st.columns(2)
 with coluna_dados[0]:
@@ -153,8 +164,8 @@ coluna_salvar = st.columns(2)
 if normalizar:
     lista_nova_dados = []
     for df in lista_dados:
-        logic = df["x"] > x_min_norm
-        logic1 = df["x"] < x_max_norm
+        logic = df["x"] >= x_min_norm
+        logic1 = df["x"] <= x_max_norm
         valor_maximo = df.loc[logic & logic1]["y"].max()
         df["y"] = df["y"] / valor_maximo
         lista_nova_dados.append(df)
@@ -221,5 +232,40 @@ grafico_trabalhado.update_layout(
 if inverter:
     grafico_trabalhado.update_xaxes(autorange="reversed")
 
+coluna_transp = st.columns(4)
+with coluna_transp[0]:
+    borda_transp = st.checkbox("Borda transparente")
+    borda_bgcolor = st.color_picker("Escolha a cor da borda",value = "#FFFFFF",disabled =borda_transp)
+    if borda_transp:
+        borda_bgcolor = "rgba(0,0,0,0)"
+
+
+with coluna_transp[1]:
+    fundo_transp = st.checkbox("Fundo transparente")
+    bgcolor = st.color_picker("Escolha a cor do fundo do gráfico",value = "#CEDDFB",disabled =fundo_transp)
+    if fundo_transp:
+        bgcolor = "rgba(0,0,0,0)"
+
+        
+        
+with coluna_transp[2]:
+    txcolor = st.color_picker("Escolha a cor para o texto",value = "#000000")
+    
+    
+with coluna_transp[3]:
+    if st.checkbox("Sem grid"):
+        grade = False
+    else:
+        grade = True
+    grcolor = st.color_picker("Escolha a cor para a grade e eixos",value = "#FFFFFF")
+    grafico_trabalhado.update_xaxes(zerolinecolor = grcolor,showgrid = grade, gridcolor = grcolor)
+    grafico_trabalhado.update_yaxes(zerolinecolor = grcolor,showgrid = grade, gridcolor = grcolor)
+
+grafico_trabalhado.update_layout({
+            "paper_bgcolor": borda_bgcolor,
+            "plot_bgcolor": bgcolor,
+            "font_color": txcolor, 
+            
+        })
 
 st.plotly_chart(grafico_trabalhado, use_container_width=True)

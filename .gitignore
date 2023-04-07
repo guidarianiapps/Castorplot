@@ -129,5 +129,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 testes_pessoal
+<<<<<<< HEAD
 .vscode/settings.json
 teste.bat
+=======
+teste.bat
+>>>>>>> 29ec08519dc9e84bf115e48569c9e6fa1dfe225d

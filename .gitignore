@@ -135,3 +135,5 @@ teste.bat
 =======
 teste.bat
 >>>>>>> 29ec08519dc9e84bf115e48569c9e6fa1dfe225d
+streamlit/secrets.toml
+.streamlit/secrets.toml

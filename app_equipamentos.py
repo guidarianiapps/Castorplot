@@ -77,29 +77,32 @@ def check_password():
         # First run, show input for password.
         st.write("# Bem vindo ao Castorplot")
         st.write(
-            """O site está correto, apenas está com senha porque entraram novas pessoas na faculdade e para não facilitar tanto a vida deles apenas os veteranos vão ter a senha, se não tiver e quiser é só entrar em contato. """
+            """O site está correto, apenas está com senha, porque entraram novas pessoas na faculdade e para não facilitar tanto a vida deles apenas os veteranos vão ter a senha, se não tiver e quiser é só entrar em contato. """
         )
         st.text_input(
             "Password", type="password", on_change=password_entered, key="password"
         )
-        st.warning("A senha será retirada em breve, até os calouros aprenderem um pouco.")
+        st.warning(
+            "A senha será retirada em breve, até os calouros aprenderem um pouco."
+        )
         return False
     elif not st.session_state["password_correct"]:
         # Password not correct, show input + error.
         st.write("# Bem vindo ao Castorplot")
         st.write(
-            """O site está correto, apenas está com senha porque entraram novas pessoas na faculdade e para não facilitar tanto a vida deles apenas os veteranos vão ter a senha, se não tiver e quiser é só entrar em contato. """
+            """O site está correto, apenas está com senha, porque entraram novas pessoas na faculdade e para não facilitar tanto a vida deles apenas os veteranos vão ter a senha, se não tiver e quiser é só entrar em contato. """
         )
         st.text_input(
             "Password", type="password", on_change=password_entered, key="password"
         )
         st.error("😕 Senha incorreta")
-        st.warning("A senha será retirada em breve, até os calouros aprenderem um pouco.")
+        st.warning(
+            "A senha será retirada em breve, até os calouros aprenderem um pouco."
+        )
         return False
     else:
         # Password correct.
         return True
-
 
 
 ####################################Contatos################
@@ -121,14 +124,11 @@ st.sidebar.write(
 )
 
 
-
-
-
 if not check_password():
     st.stop()
-    
+
     ##################################################################################
-    
+
 st.header(
     "Um site para qualquer pessoa poder utilizar para efetuar um pré-tratamento rápido dos dados dos equipamentos e plotá-los."
 )

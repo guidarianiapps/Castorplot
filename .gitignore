@@ -131,3 +131,4 @@ dmypy.json
 testes_pessoal
 teste.bat
 .vscode/settings.json
+.streamlit/secrets.toml

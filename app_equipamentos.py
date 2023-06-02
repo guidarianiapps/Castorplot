@@ -348,6 +348,14 @@ with layout:
 # st.write(dicionario_nomes_cor)
 ## A resolver...
 
+if ticks:
+    plot_final.fig.update_layout(
+        xaxis=dict(ticks="inside", tickfont=dict(color=txcolor), tickcolor=txcolor),
+        yaxis=dict(ticks="inside", tickfont=dict(color=txcolor), tickcolor=txcolor),
+    )
+
+
+
 if borda_transp:
     borda_bgcolor = "rgba(0,0,0,0)"
 
@@ -380,16 +388,6 @@ plot_final.fig.update_layout(
 if inverter_eixo_x:
     plot_final.fig.update_xaxes(autorange="reversed")
 
-if ticks:
-    plot_final.fig.update_layout(
-        xaxis=dict(ticks="inside", tickfont=dict(color=txcolor), tickcolor=txcolor),
-        yaxis=dict(ticks="inside", tickfont=dict(color=txcolor), tickcolor=txcolor),
-    )
-else:
-    plot_final.fig.update_layout(
-        xaxis=dict(tickfont=dict(color=txcolor), tickcolor=txcolor),
-        yaxis=dict(tickfont=dict(color=txcolor), tickcolor=txcolor),
-    )
 
 plot_final.fig.update_xaxes(zeroline=False, showgrid=grade, gridcolor=grcolor)
 

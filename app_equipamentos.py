@@ -408,8 +408,8 @@ config = {
 }
 
 if tirar_y:
-    plot_final.fig.update_yaxes(xaxis=dict(showticklabels=False))
+    plot_final.fig.update_yaxes(showticklabels=False)
 if tirar_x:
-    plot_final.fig.update_xaxes(xaxis=dict(showticklabels=False))
+    plot_final.fig.update_xaxes(showticklabels=False)
 
 st.plotly_chart(plot_final.fig, use_container_width=True, config=config)

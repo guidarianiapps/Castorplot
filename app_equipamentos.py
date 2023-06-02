@@ -214,12 +214,11 @@ with layout:
                 leg_x = st.text_input("Eixo x", value="Raman Shift (cm<sup>-1</sup>)")
                 inverter_eixo_x = st.checkbox("Inverter eixo x")
                 linha_eixos = st.checkbox("Linha nos eixos", value=True)
-                tirar_y = st.checkbox("Remover números e ticks y")
                 
             with coluna_leg[1]:
                 leg_y = st.text_input("Eixo y", value="Intensity (au)")
                 ticks = st.checkbox("Ticks", value=True)
-                tirar_x = st.checkbox("Remover números e ticks x")
+                tirar_y = st.checkbox("Remover números e ticks y")
 
         with st.expander("Cores"):
             coluna_borda = st.columns(2)
@@ -372,9 +371,6 @@ plot_final.fig.update_layout(
 
 if tirar_y:
     plot_final.fig.update_yaxes(showticklabels=False)
-if tirar_x:
-    plot_final.fig.update_xaxes(showticklabels=False,title_standoff=10)
-
 plot_final.fig.update_layout(
     title=titulo,
     title_font=dict(color=txcolor),

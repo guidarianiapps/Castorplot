@@ -213,9 +213,13 @@ with layout:
             with coluna_leg[0]:
                 leg_x = st.text_input("Eixo x", value="Raman Shift (cm<sup>-1</sup>)")
                 inverter_eixo_x = st.checkbox("Inverter eixo x")
+                linha_eixos = st.checkbox("Linha nos eixos", value=True)
+                tirar_y = st.checkbox("Remover números e ticks y")
+                
             with coluna_leg[1]:
                 leg_y = st.text_input("Eixo y", value="Intensity (au)")
                 ticks = st.checkbox("Ticks", value=True)
+                tirar_x = st.checkbox("Remover números e ticks x")
 
         with st.expander("Cores"):
             coluna_borda = st.columns(2)
@@ -250,9 +254,6 @@ with layout:
                     "Escolha a cor para a grade", value="#FFFFFF", disabled=not grade
                 )
             with coluna_final[0]:
-                linha_eixos = st.checkbox("Linha nos eixos", value=True)
-
-            with coluna_final[1]:
                 txcolor = st.color_picker(
                     "Escolha a cor para o texto e linhas", value="#000000"
                 )
@@ -351,6 +352,11 @@ if ticks:
         xaxis=dict(ticks="inside", tickfont=dict(color=txcolor), tickcolor=txcolor),
         yaxis=dict(ticks="inside", tickfont=dict(color=txcolor), tickcolor=txcolor),
     )
+elif tirar_y or tirar_x:
+    if tirar_y:
+        plot_final.fig.update_yaxes(xaxis=dict(showticklabels=False))
+    if tirar_x:
+        plot_final.fig.update_xaxes(xaxis=dict(showticklabels=False))
 else:
     plot_final.fig.update_xaxes(tickfont=dict(color=txcolor))
     plot_final.fig.update_yaxes(tickfont=dict(color=txcolor))

@@ -352,7 +352,8 @@ if ticks:
         yaxis=dict(ticks="inside", tickfont=dict(color=txcolor), tickcolor=txcolor),
     )
 else:
-    plot_final.fig.update_layout({"font":dict(color = txcolor)})
+    plot_final.fig.update_xaxes(tickfont=dict(color=txcolor))
+    plot_final.fig.update_yaxes(tickfont=dict(color=txcolor))
 
 
 if borda_transp:

@@ -249,7 +249,7 @@ with layout:
                 )
             with coluna_grid[1]:
                 grcolor = st.color_picker(
-                    "Escolha a cor para a grade e eixos", value="#FFFFFF"
+                    "Escolha a cor para a grade", value="#FFFFFF",disabled = not grade
                 )
             with coluna_final[0]:
                 linha_eixos = st.checkbox("Linha nos eixos", value=True)

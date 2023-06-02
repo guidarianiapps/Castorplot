@@ -25,8 +25,6 @@ st.sidebar.write(
 )
 
 
-
-
 st.header(
     "Um site para qualquer pessoa poder utilizar para efetuar um pré-tratamento rápido e plotá-los."
 )
@@ -118,7 +116,7 @@ for index, key in zip(
 ):  # mostra as tabelas importadas
     with colunas_tabelas[index]:
         st.write(dicionario_pandas[key].head(5))
-        
+
 plot_teste = funcao.criar_grafico_plotly(dicionario_pandas)
 plot_teste.grafico()
 st.plotly_chart(plot_teste.fig, use_container_width=True)
@@ -249,7 +247,7 @@ with layout:
                 )
             with coluna_grid[1]:
                 grcolor = st.color_picker(
-                    "Escolha a cor para a grade", value="#FFFFFF",disabled = not grade
+                    "Escolha a cor para a grade", value="#FFFFFF", disabled=not grade
                 )
             with coluna_final[0]:
                 linha_eixos = st.checkbox("Linha nos eixos", value=True)
@@ -354,10 +352,7 @@ if ticks:
         yaxis=dict(ticks="inside", tickfont=dict(color=txcolor), tickcolor=txcolor),
     )
 else:
-     plot_final.fig.update_layout(
-        xaxis=dict(tickcolor=txcolor),
-        yaxis=dict(tickcolor=txcolor),
-    )
+    plot_final.fig.update_layout(dict(font=txcolor))
 
 
 if borda_transp:
@@ -403,12 +398,12 @@ if linha_eixos:
     plot_final.fig.update_yaxes(showline=True, linewidth=2, linecolor=txcolor)
 
 config = {
-'toImageButtonOptions': {
-'format': 'png', # one of png, svg, jpeg, webp
-'filename': 'Plot_castorplot',
-'scale': 2 # Multiply title/legend/axis/canvas sizes by this factor
-}
+    "toImageButtonOptions": {
+        "format": "png",  # one of png, svg, jpeg, webp
+        "filename": "Plot_castorplot",
+        "scale": 2,  # Multiply title/legend/axis/canvas sizes by this factor
+    }
 }
 
 
-st.plotly_chart(plot_final.fig, use_container_width=True, config = config)
+st.plotly_chart(plot_final.fig, use_container_width=True, config=config)

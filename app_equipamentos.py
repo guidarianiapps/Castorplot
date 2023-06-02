@@ -5,7 +5,8 @@ import funcao
 # Dados da pagina
 st.set_page_config(page_title="CastorPlot")
 
-# Contatos
+
+####################################Contatos################
 st.sidebar.title("Contato")
 
 st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
@@ -22,6 +23,8 @@ st.sidebar.write("Autor: Guilherme Gurian Dariani")
 st.sidebar.write(
     """Em nenhum caso o autor será responsável por quaisquer erros, resultados ou informações incorretas."""
 )
+
+
 
 
 st.header(
@@ -357,6 +360,7 @@ plot_final.fig.update_layout(
         "plot_bgcolor": bgcolor,
     },
 )
+
 plot_final.fig.update_layout(
     title=titulo,
     title_font=dict(color=txcolor),
@@ -385,6 +389,7 @@ if ticks:
 plot_final.fig.update_xaxes(zeroline=False, showgrid=grade, gridcolor=grcolor)
 
 plot_final.fig.update_yaxes(zeroline=False, showgrid=grade, gridcolor=grcolor)
+
 
 if linha_eixos:
     plot_final.fig.update_xaxes(showline=True, linewidth=2, linecolor=txcolor)

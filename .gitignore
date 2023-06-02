@@ -129,6 +129,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 testes_pessoal
+
 teste.bat
 .vscode/settings.json
-.streamlit/secrets.toml
+streamlit/secrets.toml

@@ -373,7 +373,7 @@ plot_final.fig.update_layout(
 if tirar_y:
     plot_final.fig.update_yaxes(showticklabels=False)
 if tirar_x:
-    plot_final.fig.update_xaxes(showticklabels=False)
+    plot_final.fig.update_xaxes(showticklabels=False,title_standoff=10)
 
 plot_final.fig.update_layout(
     title=titulo,

@@ -224,7 +224,7 @@ with layout:
                 tirar_y = st.checkbox("Remover números do eixo y")
                 inverter_eixo_x = st.checkbox("Inverter eixo x")
 
-        with st.expander("Cores"):
+        with st.expander("Cores e fonte"):
             coluna_borda = st.columns(2)
             coluna_fundo = st.columns(2)
             coluna_grid = st.columns(2)
@@ -260,6 +260,9 @@ with layout:
                 txcolor = st.color_picker(
                     "Escolha a cor para o texto e linhas", value="#000000"
                 )
+            with coluna_final[1]:
+                fonte = st.text_input("Qual fonte?", value="Arial")
+                tamanho_fonte = st.number_input("Tamanho da fonte", value=10)
 
     with coluna_direita_layout:
         with st.expander("Local legenda"):
@@ -371,6 +374,10 @@ plot_final.fig.update_layout(
         "paper_bgcolor": borda_bgcolor,
         "plot_bgcolor": bgcolor,
     },
+    font = dict(
+        family = fonte,
+        size = tamanho_fonte
+    )
 )
 
 if tirar_y:

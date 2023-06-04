@@ -190,7 +190,7 @@ with tratamento:
             st.write(
                 "A separação de linha apenas soma o valor no y, isso serve para dar um shift nos dados e melhorar a visualização, normalmente utilizado junto com a normalização dos dados."
             )
-            separar = st.number_input("Valor de separação", 0, value=0)
+            separar = st.number_input("Valor de separação", 0, value=0.00)
             if separar != 0:
                 funcao.separar(dicionario_pandas, separar)
 

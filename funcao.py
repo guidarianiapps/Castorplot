@@ -95,7 +95,8 @@ def normaliza(dicionario, x_min, x_max):
         intervalo = dicionario[chaves][parametro_min & parametro_max]
         for coluna in dicionario[chaves].columns[1::]:
             valor_maximo = intervalo[coluna].max()
-            dicionario[chaves][coluna] = dicionario[chaves][coluna] / valor_maximo
+            valor_minimo = intervalo[coluna].min()
+            dicionario[chaves][coluna] = dicionario[chaves][coluna] - valor_minimo / (valor_maximo- valor_minimo)
 
 
 

@@ -169,7 +169,7 @@ with tratamento:
     with direita_tratamento:
         with st.expander("Normalização"):
             st.write(
-                "A normalização apenas acha o y máximo do intervalo determinado e divide os dados pelo valor máximo."
+                "A normalização por min max, utilizando somente as informações do intervalo determinado."
             )
             normalizacao_colunas_dentro = st.columns(2)
             x_max, x_min = funcao.definir_max_min(dicionario_pandas)

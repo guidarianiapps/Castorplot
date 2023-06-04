@@ -262,7 +262,6 @@ with layout:
                 )
             with coluna_final[1]:
                 fonte = st.text_input("Qual fonte?", value="Arial")
-                tamanho_fonte = st.number_input("Tamanho da fonte", value=10)
 
     with coluna_direita_layout:
         with st.expander("Local legenda"):
@@ -375,8 +374,7 @@ plot_final.fig.update_layout(
         "plot_bgcolor": bgcolor,
     },
     font = dict(
-        family = fonte,
-        size = tamanho_fonte
+        family = fonte
     )
 )
 

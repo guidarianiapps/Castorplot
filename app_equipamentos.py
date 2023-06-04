@@ -221,7 +221,7 @@ with layout:
                 ticks = st.checkbox("Ticks", value=True)
                 linha_eixos = st.checkbox("Linha nos eixos", value=True)
             with coluna_opções_eixos[1]:
-                tirar_y = st.checkbox("Remover números e ticks y")
+                tirar_y = st.checkbox("Remover números do eixo y")
                 inverter_eixo_x = st.checkbox("Inverter eixo x")
 
         with st.expander("Cores"):

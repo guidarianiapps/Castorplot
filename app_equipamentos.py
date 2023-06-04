@@ -217,10 +217,10 @@ with layout:
                 leg_y = st.text_input("Legenda eixo y", value="Intensity (au)")
                 
             coluna_opções_eixos = st.columns(2)
-            with coluna_opções_eixo[0]:
+            with coluna_opções_eixos[0]:
                 ticks = st.checkbox("Ticks", value=True)
                 linha_eixos = st.checkbox("Linha nos eixos", value=True)
-            with coluna_opções_eixo[1]:
+            with coluna_opções_eixos[1]:
                 tirar_y = st.checkbox("Remover números e ticks y")
                 inverter_eixo_x = st.checkbox("Inverter eixo x")
 

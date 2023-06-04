@@ -209,16 +209,20 @@ with layout:
                 "Se precisar é possível escrever HTML por exemplo, <sup>-1</sup> para $^{-1}$ e <sub>-1</sub> para $_{-1}$, [mais exemplos](https://www.w3schools.com/tags/ref_byfunc.asp) "
             )
             titulo = st.text_input("Título do gráfico")
-            coluna_leg = st.columns(2)
-            with coluna_leg[0]:
-                leg_x = st.text_input("Eixo x", value="Raman Shift (cm<sup>-1</sup>)")
-                inverter_eixo_x = st.checkbox("Inverter eixo x")
-                linha_eixos = st.checkbox("Linha nos eixos", value=True)
+            coluna_leg_eixos = st.columns(2)
+            with coluna_leg_eixos[0]:
+                leg_x = st.text_input("Legenda eixo x", value="Raman Shift (cm<sup>-1</sup>)")
                 
-            with coluna_leg[1]:
-                leg_y = st.text_input("Eixo y", value="Intensity (au)")
+            with coluna_leg_eixos[1]:
+                leg_y = st.text_input("Legenda eixo y", value="Intensity (au)")
+                
+            coluna_opções_eixos = st.columns(2)
+            with coluna_opções_eixo[0]:
                 ticks = st.checkbox("Ticks", value=True)
+                linha_eixos = st.checkbox("Linha nos eixos", value=True)
+            with coluna_opções_eixo[1]:
                 tirar_y = st.checkbox("Remover números e ticks y")
+                inverter_eixo_x = st.checkbox("Inverter eixo x")
 
         with st.expander("Cores"):
             coluna_borda = st.columns(2)

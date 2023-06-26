@@ -381,9 +381,13 @@ plot_final.fig.update_layout(
 if tirar_y:
     plot_final.fig.update_yaxes(showticklabels=False)
 plot_final.fig.update_layout(
-    title=titulo,
+    title={
+        'text': titulo,
+        'x': 0.5,  # Centraliza o título horizontalmente
+        'xanchor': 'center',  # Ancora o título ao centro
+        'font': {'color': txcolor}  # Define a cor do título
+    },
     title_font=dict(color=txcolor),
-    title_x=0.5,
     xaxis_title=leg_x,
     xaxis_title_font=dict(color=txcolor),
     yaxis_title=leg_y,

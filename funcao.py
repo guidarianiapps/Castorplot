@@ -90,8 +90,8 @@ def baseline_remov(dicionario):
 def normaliza(dicionario, x_min, x_max):
     for chaves in dicionario.keys():
         x = dicionario[chaves].columns[0]
-        parametro_min = dicionario[chaves][x] > x_min
-        parametro_max = dicionario[chaves][x] < x_max
+        parametro_min = dicionario[chaves][x] => x_min
+        parametro_max = dicionario[chaves][x] =< x_max
         intervalo = dicionario[chaves][parametro_min & parametro_max]
         for coluna in dicionario[chaves].columns[1::]:
             valor_maximo = intervalo[coluna].max()

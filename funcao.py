@@ -78,13 +78,11 @@ class criar_grafico_plotly:
                     self.names.append(col)
 
 
-
 def baseline_remov(dicionario):
     for chaves in dicionario.keys():
         for coluna in dicionario[chaves].columns[1::]:
             baseObj = BaselineRemoval(dicionario[chaves][coluna])
             dicionario[chaves][coluna] = baseObj.ZhangFit()
-
 
 
 def normaliza(dicionario, x_min, x_max):
@@ -96,8 +94,9 @@ def normaliza(dicionario, x_min, x_max):
         for coluna in dicionario[chaves].columns[1::]:
             valor_maximo = intervalo[coluna].max()
             valor_minimo = intervalo[coluna].min()
-            dicionario[chaves][coluna] = (dicionario[chaves][coluna] - valor_minimo) / (valor_maximo- valor_minimo)
-
+            dicionario[chaves][coluna] = (dicionario[chaves][coluna] - valor_minimo) / (
+                valor_maximo - valor_minimo
+            )
 
 
 def definir_max_min(dicionario):
@@ -111,14 +110,12 @@ def definir_max_min(dicionario):
     return maximo, minimo
 
 
-
 def separar(dicionario, valor):
     espacamento = 0
     for chaves in dicionario.keys():
         for coluna in dicionario[chaves].columns[1::]:
             dicionario[chaves][coluna] = dicionario[chaves][coluna] + espacamento
             espacamento += valor
-
 
 
 def limitar(dicionario, valor_min, valor_max):

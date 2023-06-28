@@ -190,7 +190,7 @@ with tratamento:
             st.write(
                 "A separação de linha apenas soma o valor no y, isso serve para dar um shift nos dados e melhorar a visualização, normalmente utilizado junto com a normalização dos dados."
             )
-            separar = st.number_input("Valor de separação", min_value = 0.00, step = 0.01)
+            separar = st.number_input("Valor de separação", min_value=0.00, step=0.01)
             if separar != 0:
                 funcao.separar(dicionario_pandas, separar)
 
@@ -211,11 +211,13 @@ with layout:
             titulo = st.text_input("Título do gráfico")
             coluna_leg_eixos = st.columns(2)
             with coluna_leg_eixos[0]:
-                leg_x = st.text_input("Legenda eixo x", value="Raman Shift (cm<sup>-1</sup>)")
-                
+                leg_x = st.text_input(
+                    "Legenda eixo x", value="Raman Shift (cm<sup>-1</sup>)"
+                )
+
             with coluna_leg_eixos[1]:
                 leg_y = st.text_input("Legenda eixo y", value="Intensity (au)")
-                
+
             coluna_opções_eixos = st.columns(2)
             with coluna_opções_eixos[0]:
                 ticks = st.checkbox("Ticks", value=True)
@@ -373,19 +375,17 @@ plot_final.fig.update_layout(
         "paper_bgcolor": borda_bgcolor,
         "plot_bgcolor": bgcolor,
     },
-    font = dict(
-        family = fonte
-    )
+    font=dict(family=fonte),
 )
 
 if tirar_y:
     plot_final.fig.update_yaxes(showticklabels=False)
 plot_final.fig.update_layout(
     title={
-        'text': titulo,
-        'x': 0.5,  # Centraliza o título horizontalmente
-        'xanchor': 'center',  # Ancora o título ao centro
-        'font': {'color': txcolor}  # Define a cor do título
+        "text": titulo,
+        "x": 0.5,  # Centraliza o título horizontalmente
+        "xanchor": "center",  # Ancora o título ao centro
+        "font": {"color": txcolor},  # Define a cor do título
     },
     title_font=dict(color=txcolor),
     xaxis_title=leg_x,

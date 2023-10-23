@@ -92,6 +92,7 @@ if separador == "" or delimitador == "":
 dicionario_pandas = funcao.importar(
     uploaded_file, ignor_cabecalho, delimitador, separador
 )  # criação do dicionario pandas
+
 chaves = dicionario_pandas.keys()  # nome de todos os arquivos que foram importados
 # Mudar nome das colunas
 colocar_botao = False
@@ -108,6 +109,30 @@ for key in chaves:
                 f"y_{key}_{i}" for i in range(len(colunas) - 1)
             ]
             break
+colunas_primeiro_dataset = list(dicionario_pandas[list(chaves)[0]].columns)
+if len(colunas_primeiro_dataset) > 2:
+    with st.expander("Selecionar colunas de interesse."):
+        coluna_interesse = st.columns(2)
+        colunas_interesse = colunas_primeiro_dataset
+        with coluna_interesse[0]:
+            botao_todas_colunas = st.checkbox("Todas", value=True)
+            coluna_x = st.selectbox("Selecione a coluna X.", colunas_interesse)
+            colunas_sem_X = colunas_interesse.copy()
+            colunas_sem_X.remove(coluna_x)  # type: ignore
+        with coluna_interesse[1]:
+            usar_nome_arquivo = st.checkbox("Usar nome do arquivo.")
+            colunas_y = st.multiselect(
+                "Selecione as colunas de interesse.",
+                colunas_sem_X,
+                disabled=botao_todas_colunas,
+            )
+    if botao_todas_colunas:
+        colunas_y = colunas_sem_X
+else:
+    coluna_x = None
+    colunas_y = None
+    usar_nome_arquivo = False
+
 
 colunas_tabelas = st.columns(len(dicionario_pandas))  # cria as colunas para as tabelas
 
@@ -117,7 +142,10 @@ for index, key in zip(
     with colunas_tabelas[index]:
         st.write(dicionario_pandas[key].head(5))
 
-plot_teste = funcao.criar_grafico_plotly(dicionario_pandas)
+
+plot_teste = funcao.criar_grafico_plotly(
+    dicionario_pandas, coluna_x, colunas_y, usar_nome_arquivo
+)
 plot_teste.grafico()
 st.plotly_chart(plot_teste.fig, use_container_width=True)
 st.title("Tratamento")
@@ -176,13 +204,14 @@ with tratamento:
             with normalizacao_colunas_dentro[1]:
                 x_min_escolido = st.number_input("Mínimo", x_min, x_max, value=x_min)
                 x_max_escolido = st.number_input("Máximo", x_min, x_max, value=x_max)
+
             with normalizacao_colunas_dentro[0]:
                 normalizar = st.checkbox(
                     "Normalizar",
-                    disabled=x_max_escolido <= x_min_escolido,
+                    disabled=x_max_escolido <= x_min_escolido,  # type: ignore
                     key="normalizar",
                 )
-                if x_max_escolido <= x_min_escolido:
+                if x_max_escolido <= x_min_escolido:  # type: ignore
                     st.warning("O valor maxímo precisa ser maior que o minímo.")
                 if normalizar:
                     funcao.normaliza(dicionario_pandas, x_min_escolido, x_max_escolido)
@@ -194,7 +223,9 @@ with tratamento:
             if separar != 0:
                 funcao.separar(dicionario_pandas, separar)
 
-plot_final = funcao.criar_grafico_plotly(dicionario_pandas)  # criar classe grafico
+plot_final = funcao.criar_grafico_plotly(
+    dicionario_pandas, coluna_x, colunas_y, usar_nome_arquivo
+)  # criar classe grafico
 plot_final.grafico()
 
 

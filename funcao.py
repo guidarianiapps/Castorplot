@@ -38,17 +38,20 @@ def importar(uploaded_file, ignor_cabecalho, delimitador, separador):
                 arquivos_pandas[nome + f"({lista_nomes.count(nome)-1})"] = pd.read_csv(
                     arquivo, header=numero_cabeçalho, sep=delimitador, decimal=separador
                 )
-            # cria lista com todos os aquivos em pandas.
+        return arquivos_pandas  # cria lista com todos os aquivos em pandas.
     else:  # para o programa se uploaded_file is None, não precisaria, pois já existe no programa esse if, porêm estava tendo aviso
         st.stop()
-    return arquivos_pandas
+        return dict()
 
 
 class criar_grafico_plotly:
-    def __init__(self, dados_pandas):
+    def __init__(self, dados_pandas, coluna_x, colunas_de_interrese, nome_arquivo):
         self.fig = go.Figure()
         self.dados = dados_pandas
         self.names = []
+        self.coluna_x = coluna_x
+        self.colunas_de_interrese = colunas_de_interrese
+        self.nome_arquivo = nome_arquivo
 
     def grafico(self):
         """
@@ -69,10 +72,17 @@ class criar_grafico_plotly:
                 )
                 self.names.append(key)
             else:
-                for col in colunas[1::]:
+                for col in self.colunas_de_interrese:
+                    if self.nome_arquivo:
+                        nome = key
+                    else:
+                        nome = col
                     self.fig = self.fig.add_trace(
                         go.Scatter(
-                            x=valor[colunas[0]], y=valor[col], name=col, mode="lines"
+                            x=valor[self.coluna_x],
+                            y=valor[col],
+                            name=nome,
+                            mode="lines",
                         )
                     )
                     self.names.append(col)

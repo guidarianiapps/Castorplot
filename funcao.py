@@ -45,12 +45,12 @@ def importar(uploaded_file, ignor_cabecalho, delimitador, separador):
 
 
 class criar_grafico_plotly:
-    def __init__(self, dados_pandas, coluna_x, colunas_de_interrese, nome_arquivo):
+    def __init__(self, dados_pandas, coluna_x, colunas_y, nome_arquivo):
         self.fig = go.Figure()
         self.dados = dados_pandas
         self.names = []
         self.coluna_x = coluna_x
-        self.colunas_de_interrese = colunas_de_interrese
+        self.colunas_de_interrese = colunas_y
         self.nome_arquivo = nome_arquivo
 
     def grafico(self):

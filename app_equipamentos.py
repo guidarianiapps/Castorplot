@@ -115,12 +115,12 @@ if len(colunas_primeiro_dataset) > 2:
         coluna_interesse = st.columns(2)
         colunas_interesse = colunas_primeiro_dataset
         with coluna_interesse[0]:
-            botao_todas_colunas = st.checkbox("Todas", value=True)
+            usar_nome_arquivo = st.checkbox("Usar nome do arquivo.")
             coluna_x = st.selectbox("Selecione a coluna X.", colunas_interesse)
             colunas_sem_X = colunas_interesse.copy()
             colunas_sem_X.remove(coluna_x)  # type: ignore
         with coluna_interesse[1]:
-            usar_nome_arquivo = st.checkbox("Usar nome do arquivo.")
+            botao_todas_colunas = st.checkbox("Todas", value=True)
             colunas_y = st.multiselect(
                 "Selecione as colunas de interesse.",
                 colunas_sem_X,

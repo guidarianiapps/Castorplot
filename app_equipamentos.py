@@ -130,7 +130,7 @@ if len(colunas_primeiro_dataset) > 2:
         colunas_y = colunas_sem_X
 else:
     coluna_x = colunas_primeiro_dataset[0]
-    colunas_y = colunas_primeiro_dataset[1]
+    colunas_y = [colunas_primeiro_dataset[1]]
     usar_nome_arquivo = False
 
 
@@ -189,7 +189,6 @@ with tratamento:
                 'Digite a equação para mudar os dados, a função deve ser escrita em latex com a variavel sendo "x", exemplo: x^2 + 1/2'
             )
             mudar_eq_x = st.checkbox("Mudar dados x a partir da equação.")
-            st.write(coluna_x)
             
             string_eq_x = st.text_input("Escreva a equação para x:", disabled = not mudar_eq_x)
             função_eq_x = funcao.reescreve_latex(string_eq_x, mudar_eq_x)
@@ -204,7 +203,7 @@ with tratamento:
         funcao.utilizar_equação(dicionario_pandas, colunas_y, função_eq_y)
             
     if mudar_eq_x:
-        funcao.utilizar_equação(dicionario_pandas, coluna_x, função_eq_x)
+        funcao.utilizar_equação(dicionario_pandas, [coluna_x], função_eq_x)
         
     if tirar_baseline_antes and tirar_baseline:
         funcao.baseline_remov(dicionario_pandas)

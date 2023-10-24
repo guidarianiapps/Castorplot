@@ -90,9 +90,10 @@ class criar_grafico_plotly:
                     self.names.append(col)
 
 
-def reescreve_latex(string):
-    função = sympify(string)
-    return função
+def reescreve_latex(string, mudar):
+    if mudar:
+        função = sympify(string)
+        return função
 
 
 def utilizar_equação(dicionario, colunas, função):

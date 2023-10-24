@@ -129,8 +129,8 @@ if len(colunas_primeiro_dataset) > 2:
     if botao_todas_colunas:
         colunas_y = colunas_sem_X
 else:
-    coluna_x = None
-    colunas_y = None
+    coluna_x = colunas_primeiro_dataset[0]
+    colunas_y = colunas_primeiro_dataset[1]
     usar_nome_arquivo = False
 
 
@@ -184,7 +184,17 @@ with tratamento:
                 tirar_baseline_antes = st.checkbox(
                     "Tirar antes de limitar", disabled=not tirar_baseline
                 )
-
+        with st.expander("Equação"):
+            st.write(
+                'Digite a equação para mudar os dados y, a função deve ser escrita em latex com a variavel sendo "x", exemplo: x^2 + 1/2'
+            )
+            mudar_eq = st.checkbox("Mudar dados a partir da equação.")
+            string_eq = st.text_input("Escreva a equação:", disabled = not mudar_eq)
+            função_eq = funcao.reescreve_latex(string_eq, disabled = not mudar_eq)
+            st.write(função_eq)
+            
+    if mudar_eq:
+        funcao.utilizar_equação(dicionario_pandas, colunas_y, função_eq)
     if tirar_baseline_antes and tirar_baseline:
         funcao.baseline_remov(dicionario_pandas)
         funcao.limitar(dicionario_pandas, intervalo_minimo, intervalo_maximo)

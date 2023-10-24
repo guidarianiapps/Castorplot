@@ -3,6 +3,8 @@ import numpy as np
 import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
+from sympy import sympify, lambdify, symbols
+import numpy as np
 
 
 @st.cache_data
@@ -86,6 +88,20 @@ class criar_grafico_plotly:
                         )
                     )
                     self.names.append(col)
+
+
+def reescreve_latex(string):
+    função = sympify(string)
+    return função
+
+
+def utilizar_equação(dicionario, colunas, função):
+    x = symbols("x")
+    funcao_lambda = lambdify(x, função, modules="numpy")
+    for chaves in dicionario.keys():
+        for coluna in colunas:
+            dado_mudar = dicionario[chaves][coluna].values
+            dicionario[chaves][coluna] = funcao_lambda(dado_mudar)
 
 
 def baseline_remov(dicionario):

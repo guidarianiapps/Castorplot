@@ -188,13 +188,13 @@ with tratamento:
             st.write(
                 'Digite a equação para mudar os dados, a função deve ser escrita em latex com a variavel sendo "x", exemplo: x^2 + 1/2'
             )
-            mudar_eq_x = st.checkbox("Mudar dados a partir da equação.")
-            string_eq_x = st.text_input("Escreva a equação:", disabled = not mudar_eq_x)
+            mudar_eq_x = st.checkbox("Mudar dados x a partir da equação.")
+            string_eq_x = st.text_input("Escreva a equação para x:", disabled = not mudar_eq_x)
             função_eq_x = funcao.reescreve_latex(string_eq_x, mudar_eq_x)
             st.write(função_eq_x)
             
-            mudar_eq_y = st.checkbox("Mudar dados a partir da equação.")
-            string_eq_y = st.text_input("Escreva a equação:", disabled = not mudar_eq_y)
+            mudar_eq_y = st.checkbox("Mudar dados y a partir da equação.")
+            string_eq_y = st.text_input("Escreva a equação para y:", disabled = not mudar_eq_y)
             função_eq_y = funcao.reescreve_latex(string_eq_y, mudar_eq_y)
             st.write(função_eq_y)
             

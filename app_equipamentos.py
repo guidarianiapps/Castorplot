@@ -189,10 +189,11 @@ with tratamento:
                 'Digite a equação para mudar os dados y, a função deve ser escrita em latex com a variavel sendo "x", exemplo: x^2 + 1/2'
             )
             mudar_eq = st.checkbox("Mudar dados a partir da equação.")
-            string_eq = st.text_input("Escreva a equação:", disabled = not mudar_eq)
-            função_eq = funcao.reescreve_latex(string_eq, mudar_eq)
-            st.write(função_eq, disabled = not mudar_eq)
-            
+            string_eq = st.text_input("Escreva a equação:", disabled=not mudar_eq)
+            reescrever = True if string_eq != None else False
+            função_eq = funcao.reescreve_latex(string_eq, reescrever)
+            st.write(função_eq)
+
     if mudar_eq:
         funcao.utilizar_equação(dicionario_pandas, colunas_y, função_eq)
     if tirar_baseline_antes and tirar_baseline:

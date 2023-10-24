@@ -190,8 +190,8 @@ with tratamento:
             )
             mudar_eq = st.checkbox("Mudar dados a partir da equação.")
             string_eq = st.text_input("Escreva a equação:", disabled = not mudar_eq)
-            função_eq = funcao.reescreve_latex(string_eq, disabled = not mudar_eq)
-            st.write(função_eq)
+            função_eq = funcao.reescreve_latex(string_eq)
+            st.write(função_eq, disabled = not mudar_eq)
             
     if mudar_eq:
         funcao.utilizar_equação(dicionario_pandas, colunas_y, função_eq)

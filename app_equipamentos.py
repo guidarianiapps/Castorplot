@@ -186,16 +186,26 @@ with tratamento:
                 )
         with st.expander("Equação"):
             st.write(
-                'Digite a equação para mudar os dados y, a função deve ser escrita em latex com a variavel sendo "x", exemplo: x^2 + 1/2'
+                'Digite a equação para mudar os dados, a função deve ser escrita em latex com a variavel sendo "x", exemplo: x^2 + 1/2'
             )
-            mudar_eq = st.checkbox("Mudar dados a partir da equação.")
-            string_eq = st.text_input("Escreva a equação:", disabled=not mudar_eq)
-            reescrever = True if string_eq != None else False
-            função_eq = funcao.reescreve_latex(string_eq, reescrever)
-            st.write(função_eq)
-
-    if mudar_eq:
-        funcao.utilizar_equação(dicionario_pandas, colunas_y, função_eq)
+            mudar_eq_x = st.checkbox("Mudar dados a partir da equação.")
+            string_eq_x = st.text_input("Escreva a equação:", disabled = not mudar_eq_x)
+            função_eq_x = funcao.reescreve_latex(string_eq_x, mudar_eq_x)
+            st.write(função_eq_x)
+            
+            mudar_eq_y = st.checkbox("Mudar dados a partir da equação.")
+            string_eq_y = st.text_input("Escreva a equação:", disabled = not mudar_eq_y)
+            função_eq_y = funcao.reescreve_latex(string_eq_y, mudar_eq_y)
+            st.write(função_eq_y)
+            
+    if mudar_eq_y:
+        st.write(colunas_y)
+        funcao.utilizar_equação(dicionario_pandas, colunas_y, função_eq_y)
+            
+    if mudar_eq_x:
+        st.write(coluna_x)
+        funcao.utilizar_equação(dicionario_pandas, coluna_x, função_eq_x)
+        
     if tirar_baseline_antes and tirar_baseline:
         funcao.baseline_remov(dicionario_pandas)
         funcao.limitar(dicionario_pandas, intervalo_minimo, intervalo_maximo)

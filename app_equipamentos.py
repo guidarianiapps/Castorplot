@@ -31,8 +31,8 @@ st.sidebar.write(
 )
 
 
-st.header("Castorplot")
-st.title("Um site para qualquer pessoa poder utilizar para efetuar um pré-tratamento rápido e plotá-los.")
+st.title("Castorplot")
+st.header("Um site para qualquer pessoa poder utilizar para efetuar um pré-tratamento rápido e plotá-los.")
 
 with st.expander("Sobre"):
     st.title("Ideia principal")

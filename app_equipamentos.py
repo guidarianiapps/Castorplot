@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import funcao
 
 
@@ -11,7 +10,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-components.html("""<meta name="google-site-verification" content="S6wRiTkp28GuJeIm83ChEZWCfmpZzC4kFNNnbqMn0ow" />""")
 
 ####################################Contatos################
 st.sidebar.image(r"imagem/CASTORPLOT.png")

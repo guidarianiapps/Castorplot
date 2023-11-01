@@ -3,10 +3,16 @@ import funcao
 
 
 # Dados da pagina
-st.set_page_config(page_title="CastorPlot")
-
+st.set_page_config(
+    page_title="CastorPlot",
+    page_icon=r"imagem/CASTORPLOT.png",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 
 ####################################Contatos################
+st.sidebar.image(r"imagem/CASTORPLOT.png")
+
 st.sidebar.title("Contato")
 
 st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
@@ -26,7 +32,8 @@ st.sidebar.write(
 
 
 st.header("Castorplot")
-st.text("Um site para qualquer pessoa poder utilizar para efetuar um pré-tratamento rápido e plotá-los.")
+st.title("Um site para qualquer pessoa poder utilizar para efetuar um pré-tratamento rápido e plotá-los.")
+
 with st.expander("Sobre"):
     st.title("Ideia principal")
     st.write(

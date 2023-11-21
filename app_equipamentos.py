@@ -480,3 +480,12 @@ config = {
 }
 
 st.plotly_chart(plot_final.fig, use_container_width=True, config=config)
+
+with st.expander("Doação"):
+    st.write("Se quiser doar algum valor para ajudar no projeto, isso ajudará muito a mantê-lo. Por enquanto, só é aceito pix.")
+    doacao_colunas = st.columns(2)
+    with doacao_colunas[0]:
+        st.write("Se preferir o QR-code é:")
+        st.image("imagem//pix.png")
+    with doacao_colunas[1]:
+        st.write("A chave é o email guidarianiapps@gmail.com.")

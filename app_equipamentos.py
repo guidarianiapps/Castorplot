@@ -485,6 +485,7 @@ with st.expander("Doação"):
     st.write("""Este site gratuito oferece funções que muitos outros cobram para realizá-las.
     Também é mantido por uma única pessoa, o que torna o trabalho difícil e demanda muito tempo.
     Sua contribuição é muito bem-vinda e ajudará a mantê-lo.""")
+    st.write("Por enquanto, só é aceito pix.")
     doacao_colunas = st.columns(2)
     with doacao_colunas[0]:
         st.write("Se preferir o QR-code é:")

@@ -475,14 +475,16 @@ config = {
     "toImageButtonOptions": {
         "format": "png",  # one of png, svg, jpeg, webp
         "filename": "Plot_castorplot",
-        "scale": 2,  # Multiply title/legend/axis/canvas sizes by this factor
+        "scale": 3,  # Multiply title/legend/axis/canvas sizes by this factor
     }
 }
 
 st.plotly_chart(plot_final.fig, use_container_width=True, config=config)
 
 with st.expander("Doação"):
-    st.write("Se quiser doar algum valor para ajudar no projeto, isso ajudará muito a mantê-lo. Por enquanto, só é aceito pix.")
+    st.write("""Este site gratuito oferece funções que muitos outros cobram para realizá-las.
+    Também é mantido por uma única pessoa, o que torna o trabalho difícil e demanda muito tempo.
+    Sua contribuição é muito bem-vinda e ajudará a mantê-lo.""")
     doacao_colunas = st.columns(2)
     with doacao_colunas[0]:
         st.write("Se preferir o QR-code é:")

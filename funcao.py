@@ -64,15 +64,17 @@ class criar_grafico_plotly:
             figura: imagem gerada com plotly.
         """
         assert isinstance(self.dados, dict)
+        linha = 0
         for key, valor in self.dados.items():
             colunas = valor.columns
             if len(colunas) == 2:
+                linha += 1
                 self.fig = self.fig.add_trace(
                     go.Scatter(
                         x=valor[colunas[0]], y=valor[colunas[1]], name=key, mode="lines"
                     )
                 )
-                self.names.append(key)
+                self.nomes.append(key)
             else:
                 for col in self.colunas_de_interrese:
                     if self.nome_arquivo:
@@ -151,3 +153,14 @@ def limitar(dicionario, valor_min, valor_max):
         parametro_min = dicionario[chaves][x] >= valor_min
         parametro_max = dicionario[chaves][x] <= valor_max
         dicionario[chaves] = dicionario[chaves][parametro_min & parametro_max]
+
+
+class nome_cor:
+    def __init__(self, dicionario):
+        key = list(dicionario.keys())[0]
+        self.nome = dicionario[key]["nome_novo"]
+        self.cor = dicionario[key]["cor"]
+
+    def atualizar(self, dicionario, linha):
+        self.nome = dicionario[linha]["nome_novo"]
+        self.cor = dicionario[linha]["cor"]

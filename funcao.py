@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
 from sympy import sympify, lambdify, symbols
-
+import numpy as np
 
 
 @st.cache_data

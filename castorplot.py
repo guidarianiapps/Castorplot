@@ -1,6 +1,7 @@
 import streamlit as st
 import funcao
 
+
 # Dados da pagina
 st.set_page_config(
     page_title="CastorPlot",
@@ -190,26 +191,26 @@ with tratamento:
                 tirar_baseline_antes = st.checkbox(
                     "Tirar antes de limitar", disabled=not tirar_baseline
                 )
-    #     with st.expander("Equação"):
-    #         st.write(
-    #             'Digite a equação para mudar os dados, a função deve ser escrita em latex com a variavel sendo "x", exemplo: x^2 + 1/2'
-    #         )
-    #         mudar_eq_x = st.checkbox("Mudar dados x a partir da equação.")
+        with st.expander("Equação"):
+            st.write(
+                'Digite a equação para mudar os dados, a função deve ser escrita em latex com a variavel sendo "x", exemplo: x^2 + 1/2'
+            )
+            mudar_eq_x = st.checkbox("Mudar dados x a partir da equação.")
             
-    #         string_eq_x = st.text_input("Escreva a equação para x:", disabled = not mudar_eq_x)
-    #         função_eq_x = funcao.reescreve_latex(string_eq_x, mudar_eq_x)
-    #         st.write(função_eq_x)
+            string_eq_x = st.text_input("Escreva a equação para x:", disabled = not mudar_eq_x)
+            função_eq_x = funcao.reescreve_latex(string_eq_x, mudar_eq_x)
+            st.write(função_eq_x)
             
-    #         mudar_eq_y = st.checkbox("Mudar dados y a partir da equação.")
-    #         string_eq_y = st.text_input("Escreva a equação para y:", disabled = not mudar_eq_y)
-    #         função_eq_y = funcao.reescreve_latex(string_eq_y, mudar_eq_y)
-    #         st.write(função_eq_y)
+            mudar_eq_y = st.checkbox("Mudar dados y a partir da equação.")
+            string_eq_y = st.text_input("Escreva a equação para y:", disabled = not mudar_eq_y)
+            função_eq_y = funcao.reescreve_latex(string_eq_y, mudar_eq_y)
+            st.write(função_eq_y)
             
-    # if mudar_eq_y:
-    #     funcao.utilizar_equação(dicionario_pandas, colunas_y, função_eq_y)
+    if mudar_eq_y:
+        funcao.utilizar_equação(dicionario_pandas, colunas_y, função_eq_y)
             
-    # if mudar_eq_x:
-    #     funcao.utilizar_equação(dicionario_pandas, [coluna_x], função_eq_x)
+    if mudar_eq_x:
+        funcao.utilizar_equação(dicionario_pandas, [coluna_x], função_eq_x)
         
     if tirar_baseline_antes and tirar_baseline:
         funcao.baseline_remov(dicionario_pandas)
@@ -346,9 +347,6 @@ with layout:
             st.write(
                 """As vezes quando as linhas possuem legendas grandes o final da legenda é cortado, por enquanto é recomendado colocar alguns espaços no final do nome da coluna antes de mandar o arquivo. Isso será corrigido rapidamente."""
             )  # Mudar
-    with st.expander("Personalização pelo gráfico"):
-        st.write("""Agora você pode personalizar o seu gráfico diretamente! Isso inclui mudar legendas, o local delas e até mesmo os nomes dos eixos. Mas, lembre-se: se você fizer alguma alteração fora do gráfico, todas essas personalizações serão resetadas. Portanto, é melhor fazer todas as suas personalizações no final. Se encontrar algum problema, por favor, avise!""")
-
 
 ## Em construção
 # with st.expander("Mudar legendas"):
@@ -478,16 +476,6 @@ config = {
         "format": "png",  # one of png, svg, jpeg, webp
         "filename": "Plot_castorplot",
         "scale": 3,  # Multiply title/legend/axis/canvas sizes by this factor
-    },
-    "edits":{
-        "annotationPosition":True,
-        "annotationTail":True,
-        "annotationText":True,
-        "axisTitleText":True,
-        "legendPosition":True,
-        "legendText":True,
-        "shapePosition":True,
-        "titleText":True,
     }
 }
 

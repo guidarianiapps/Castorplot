@@ -1,34 +1,7 @@
 import streamlit as st
 import funcao
 
-# Dados da pagina
-st.set_page_config(
-    page_title="CastorPlot",
-    page_icon=r"imagem/CASTORPLOT.png",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
-
-####################################Contatos################
-st.sidebar.image(r"imagem/CASTORPLOT.png")
-
-st.sidebar.title("Contato")
-
-st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
-st.sidebar.write("[E-mail](mailto:guidarianiapps@gmail.com)")
-st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
-st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
-st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
-
-st.sidebar.write("[Mais contatos](https://linktr.ee/guidariani)")
-
-
-st.sidebar.write("Autor: Guilherme Gurian Dariani")
-
-st.sidebar.write(
-    """Em nenhum caso o autor será responsável por quaisquer erros, resultados ou informações incorretas."""
-)
+funcao.inicial()
 
 
 st.title("Castorplot")
@@ -53,32 +26,33 @@ with st.expander("Sobre"):
         "Estava sem ideia para nome e a Professora Juliana me ajudou, o nome vem da segunda estrela mais brilhante da constelação de gêmeos, que é meu signo... "
     )
 
-colunas_import = st.columns(2)
-with colunas_import[0]:
-    uploaded_file = st.file_uploader(
+def import_dados():
+    colunas_import = st.columns(2)
+    with colunas_import[0]:
+        uploaded_file = st.file_uploader(
         "Envie os arquivos que deseja utilizar.",
         accept_multiple_files=True,
         type=[".csv", ".txt"],
     )
 
-    if uploaded_file == []:
-        st.warning("Envie um arquivo antes de continuar")
-        st.stop()
-    with st.expander("Parâmetros"):
-        st.write("""Os parâmetros são:""")
-        st.write(
+        if uploaded_file == []:
+            st.warning("Envie um arquivo antes de continuar")
+            st.stop()
+        with st.expander("Parâmetros"):
+            st.write("""Os parâmetros são:""")
+            st.write(
             """                 
                  1) Linha do cabeçalho, define a linha que será utilizada como cabeçalho, automaticamente se a primeira linha tiver somente números os nomes serão trocados automaticamente. Futuramente poderá ser trocado o nome de cada linha diretamente no site.
                  2) Delimitador de coluna: É o delimitador  de coluna, por padrão utiliza \\t, pois é como se interpreta o "tab", outros parâmetros como "," e ";" é somente escrever, qualquer dúvida concute a [documentação](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html#:~:text=ou%20StringIO.-,sep,-str%2C%20padr%C3%A3o%20%27%2C%27).
                  3) Separador decimal: é o parâmetro que será utilizado como separador decimal, é normalmente utilizado como "," ou ".".
                  """
         )
-with colunas_import[1]:
-    ignor_cabecalho = st.number_input("Linha do cabeçalho?", value=0, min_value=0)
+    with colunas_import[1]:
+        ignor_cabecalho = st.number_input("Linha do cabeçalho?", value=0, min_value=0)
 
-    delimitador = st.text_input("Qual é o delimitador de coluna?", value="\\t")
+        delimitador = st.text_input("Qual é o delimitador de coluna?", value="\\t")
 
-    separador = st.text_input("Qual é o separador decimal?", value=".")
+        separador = st.text_input("Qual é o separador decimal?", value=".")
 
     # tipo_tabela = st.selectbox(
     #     "Como é o tipo de tabela que irá trabalhar?",
@@ -88,72 +62,75 @@ with colunas_import[1]:
 
 
 # erros por falta de informação
-if separador == "" or delimitador == "":
-    if delimitador == "":
-        st.warning("Escreva um delimitador de coluna.")
-    if separador == "":
-        st.warning("Escreva um separador decimal.")
-    st.stop()
+    if separador == "" or delimitador == "":
+        if delimitador == "":
+            st.warning("Escreva um delimitador de coluna.")
+        if separador == "":
+            st.warning("Escreva um separador decimal.")
+        st.stop()
 
-dicionario_pandas = funcao.importar(
+    dicionario_pandas = funcao.importar(
     uploaded_file, ignor_cabecalho, delimitador, separador
 )  # criação do dicionario pandas
 
-chaves = dicionario_pandas.keys()  # nome de todos os arquivos que foram importados
+    chaves = dicionario_pandas.keys()  # nome de todos os arquivos que foram importados
 # Mudar nome das colunas
-colocar_botao = False
-for key in chaves:
-    colunas = dicionario_pandas[key].columns
-    mudar_nome = False
-    for palavra in colunas:
-        try:
-            mudar_nome = palavra.replace(separador, ".").isdigit()
-        except:
-            mudar_nome = isinstance(palavra, int)
-        if mudar_nome:  # muda se não tiver nome
-            dicionario_pandas[key].columns = [f"x_{key}"] + [
+    colocar_botao = False
+    for key in chaves:
+        colunas = dicionario_pandas[key].columns
+        mudar_nome = False
+        for palavra in colunas:
+            try:
+                mudar_nome = palavra.replace(separador, ".").isdigit()
+            except:
+                mudar_nome = isinstance(palavra, int)
+            if mudar_nome:  # muda se não tiver nome
+                dicionario_pandas[key].columns = [f"x_{key}"] + [
                 f"y_{key}_{i}" for i in range(len(colunas) - 1)
             ]
-            break
-colunas_primeiro_dataset = list(dicionario_pandas[list(chaves)[0]].columns)
-if len(colunas_primeiro_dataset) > 2:
-    with st.expander("Selecionar colunas de interesse."):
-        coluna_interesse = st.columns(2)
-        colunas_interesse = colunas_primeiro_dataset
-        with coluna_interesse[0]:
-            usar_nome_arquivo = st.checkbox("Usar nome do arquivo.")
-            coluna_x = st.selectbox("Selecione a coluna X.", colunas_interesse)
-            colunas_sem_X = colunas_interesse.copy()
-            colunas_sem_X.remove(coluna_x)  # type: ignore
-        with coluna_interesse[1]:
-            botao_todas_colunas = st.checkbox("Todas", value=True)
-            colunas_y = st.multiselect(
+                break
+    colunas_primeiro_dataset = list(dicionario_pandas[list(chaves)[0]].columns)
+    if len(colunas_primeiro_dataset) > 2:
+        with st.expander("Selecionar colunas de interesse."):
+            coluna_interesse = st.columns(2)
+            colunas_interesse = colunas_primeiro_dataset
+            with coluna_interesse[0]:
+                usar_nome_arquivo = st.checkbox("Usar nome do arquivo.")
+                coluna_x = st.selectbox("Selecione a coluna X.", colunas_interesse)
+                colunas_sem_X = colunas_interesse.copy()
+                colunas_sem_X.remove(coluna_x)  # type: ignore
+            with coluna_interesse[1]:
+                botao_todas_colunas = st.checkbox("Todas", value=True)
+                colunas_y = st.multiselect(
                 "Selecione as colunas de interesse.",
                 colunas_sem_X,
                 disabled=botao_todas_colunas,
             )
-    if botao_todas_colunas:
-        colunas_y = colunas_sem_X
-else:
-    coluna_x = colunas_primeiro_dataset[0]
-    colunas_y = [colunas_primeiro_dataset[1]]
-    usar_nome_arquivo = False
+        if botao_todas_colunas:
+            colunas_y = colunas_sem_X
+    else:
+        coluna_x = colunas_primeiro_dataset[0]
+        colunas_y = [colunas_primeiro_dataset[1]]
+        usar_nome_arquivo = False
 
 
-colunas_tabelas = st.columns(len(dicionario_pandas))  # cria as colunas para as tabelas
+    colunas_tabelas = st.columns(len(dicionario_pandas))  # cria as colunas para as tabelas
 
-for index, key in zip(
+    for index, key in zip(
     range(len(dicionario_pandas)), chaves
 ):  # mostra as tabelas importadas
-    with colunas_tabelas[index]:
-        st.write(dicionario_pandas[key].head(5))
+        with colunas_tabelas[index]:
+            st.write(dicionario_pandas[key].head(5))
 
 
-plot_teste = funcao.criar_grafico_plotly(
+    plot_teste = funcao.criar_grafico_plotly(
     dicionario_pandas, coluna_x, colunas_y, usar_nome_arquivo
 )
-plot_teste.grafico()
-st.plotly_chart(plot_teste.fig, use_container_width=True)
+    plot_teste.grafico()
+    st.plotly_chart(plot_teste.fig, use_container_width=True)
+    return dicionario_pandas,usar_nome_arquivo,coluna_x,colunas_y
+
+dicionario_pandas, usar_nome_arquivo, coluna_x, colunas_y = import_dados()
 st.title("Tratamento")
 
 tratamento, layout = st.tabs(["Tratamento", "Layout"])

@@ -151,3 +151,35 @@ def limitar(dicionario, valor_min, valor_max):
         parametro_min = dicionario[chaves][x] >= valor_min
         parametro_max = dicionario[chaves][x] <= valor_max
         dicionario[chaves] = dicionario[chaves][parametro_min & parametro_max]
+
+
+def inicial():
+    
+    # Dados da pagina
+    st.set_page_config(
+        page_title="CastorPlot",
+        page_icon=r"imagem/CASTORPLOT.png",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
+
+
+    ####################################Contatos################
+    st.sidebar.image(r"imagem/CASTORPLOT.png")
+
+    st.sidebar.title("Contato")
+
+    st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
+    st.sidebar.write("[E-mail](mailto:guidarianiapps@gmail.com)")
+    st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
+    st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
+    st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
+
+    st.sidebar.write("[Mais contatos](https://linktr.ee/guidariani)")
+
+
+    st.sidebar.write("Autor: Guilherme Gurian Dariani")
+
+    st.sidebar.write(
+        """Em nenhum caso o autor será responsável por quaisquer erros, resultados ou informações incorretas."""
+    )

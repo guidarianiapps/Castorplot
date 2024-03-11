@@ -6,7 +6,6 @@ import plotly.graph_objs as go
 from sympy import sympify, lambdify, symbols
 
 
-
 @st.cache_data
 def importar(uploaded_file, ignor_cabecalho, delimitador, separador):
     """
@@ -154,7 +153,7 @@ def limitar(dicionario, valor_min, valor_max):
 
 
 def inicial():
-    
+
     # Dados da pagina
     st.set_page_config(
         page_title="CastorPlot",
@@ -162,7 +161,6 @@ def inicial():
         layout="wide",
         initial_sidebar_state="expanded",
     )
-
 
     ####################################Contatos################
     st.sidebar.image(r"imagem/CASTORPLOT.png")
@@ -176,7 +174,6 @@ def inicial():
     st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
 
     st.sidebar.write("[Mais contatos](https://linktr.ee/guidariani)")
-
 
     st.sidebar.write("Autor: Guilherme Gurian Dariani")
 

@@ -10,19 +10,19 @@ config = {
         "filename": "Plot_castorplot",
         "scale": 3,  # Multiply title/legend/axis/canvas sizes by this factor
     },
-    "edits":{
-        "annotationPosition":True,
-        "annotationTail":True,
-        "annotationText":True,
-        "axisTitleText":True,
-        "legendPosition":True,
-        "legendText":True,
-        "shapePosition":True,
-        "titleText":True,
-    }
+    "edits": {
+        "annotationPosition": True,
+        "annotationTail": True,
+        "annotationText": True,
+        "axisTitleText": True,
+        "legendPosition": True,
+        "legendText": True,
+        "shapePosition": True,
+        "titleText": True,
+    },
 }
 
-st.plotly_chart(st.session_state["figura"].fig, use_container_width=True,config=config)
+st.plotly_chart(st.session_state["figura"].fig, use_container_width=True, config=config)
 colunas = st.columns(2)
 
 if st.button("Tratamento e layout :wrench:"):

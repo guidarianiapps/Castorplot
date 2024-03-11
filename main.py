@@ -61,8 +61,7 @@ with colunas[0]:
     ]
     for benefit in benefits:
         st.markdown(f"- {benefit}")
-        
-        
+
     if st.button(":blue[**Importação**] :open_file_folder:"):
         st.switch_page(r"pages\import.py")
 with colunas[1]:
@@ -70,28 +69,38 @@ with colunas[1]:
     st.header("Avisos")
 
     # Aviso 1
-    st.warning("""
+    st.warning(
+        """
     1) O site continua sendo atualizado, portanto, se encontrar algum problema, me avise por e-mail, pessoalmente ou pelo git, que será corrigido o mais rápido possível.
-    """)
+    """
+    )
 
     # Aviso 2
-    st.error("""
+    st.error(
+        """
     2) Não sou especialista no assunto, portanto, **não me responsabilizo** por nenhuma informação incorreta ou uso indevido do site.
-    """)
+    """
+    )
 
     # Aviso 3
-    st.info("""
+    st.info(
+        """
     3) Erros ortográficos podem acontecer. Tenho disgrafia e disortografia. Erros desse tipo não significam que o site está errado.
-    """)
+    """
+    )
 
     # Aviso 4
-    st.info("""
+    st.info(
+        """
     4) ***Não sou especialista em frontend***. Portanto, não espere algo bonito, apenas funcional. O foco do site é a utilidade e a praticidade.
-    """)
-    
-st.write("""Este site gratuito oferece funções que muitos outros cobram para realizá-las.
+    """
+    )
+
+st.write(
+    """Este site gratuito oferece funções que muitos outros cobram para realizá-las.
 Também é mantido por uma única pessoa, o que torna o trabalho difícil e demanda muito tempo.
-Sua contribuição é muito bem-vinda e ajudará a mantê-lo.""")
+Sua contribuição é muito bem-vinda e ajudará a mantê-lo."""
+)
 st.write("Por enquanto, só é aceito pix.")
 doacao_colunas = st.columns(2)
 with doacao_colunas[0]:

@@ -4,12 +4,14 @@ import funcao
 
 funcao.inicial()
 
-if 'figura' not in st.session_state:
-    st.session_state['figura'] = 0
+if "figura" not in st.session_state:
+    st.session_state["figura"] = 0
 
 st.title("Tratamento e layout")
-if st.button("**Importação** :open_file_folder:", help="Volta para a página de importação"):
-        st.switch_page(r"pages\import.py")
+if st.button(
+    "**Importação** :open_file_folder:", help="Volta para a página de importação"
+):
+    st.switch_page(r"pages\import.py")
 
 tratamento, layout = st.tabs(["Tratamento", "Layout"])
 
@@ -17,7 +19,9 @@ with tratamento:
     esquerda_tratamento, direita_tratamento = st.columns(2)
     with esquerda_tratamento:
         with st.expander("Intervalo de interesse"):
-            x_max_interv, x_min_interv = funcao.definir_max_min(st.session_state['dicionario_pandas'])
+            x_max_interv, x_min_interv = funcao.definir_max_min(
+                st.session_state["dicionario_pandas"]
+            )
             st.write(
                 "O intervalo de interesse é onde será visualizado seu espectro, é recomendado delimitar a área de interesse."
             )
@@ -45,15 +49,21 @@ with tratamento:
                 tirar_baseline_antes = st.checkbox(
                     "Tirar antes de limitar", disabled=not tirar_baseline
                 )
-        
+
     if tirar_baseline_antes and tirar_baseline:
-        funcao.baseline_remov(st.session_state['dicionario_pandas'])
-        funcao.limitar(st.session_state['dicionario_pandas'], intervalo_minimo, intervalo_maximo)
+        funcao.baseline_remov(st.session_state["dicionario_pandas"])
+        funcao.limitar(
+            st.session_state["dicionario_pandas"], intervalo_minimo, intervalo_maximo
+        )
     elif not tirar_baseline_antes and tirar_baseline:
-        funcao.limitar(st.session_state['dicionario_pandas'], intervalo_minimo, intervalo_maximo)
-        funcao.baseline_remov(st.session_state['dicionario_pandas'])
+        funcao.limitar(
+            st.session_state["dicionario_pandas"], intervalo_minimo, intervalo_maximo
+        )
+        funcao.baseline_remov(st.session_state["dicionario_pandas"])
     else:
-        funcao.limitar(st.session_state['dicionario_pandas'], intervalo_minimo, intervalo_maximo)
+        funcao.limitar(
+            st.session_state["dicionario_pandas"], intervalo_minimo, intervalo_maximo
+        )
 
     with direita_tratamento:
         with st.expander("Normalização"):
@@ -61,7 +71,7 @@ with tratamento:
                 "A normalização por min max, utilizando somente as informações do intervalo determinado."
             )
             normalizacao_colunas_dentro = st.columns(2)
-            x_max, x_min = funcao.definir_max_min(st.session_state['dicionario_pandas'])
+            x_max, x_min = funcao.definir_max_min(st.session_state["dicionario_pandas"])
             with normalizacao_colunas_dentro[1]:
                 x_min_escolido = st.number_input("Mínimo", x_min, x_max, value=x_min)
                 x_max_escolido = st.number_input("Máximo", x_min, x_max, value=x_max)
@@ -75,17 +85,24 @@ with tratamento:
                 if x_max_escolido <= x_min_escolido:  # type: ignore
                     st.warning("O valor maxímo precisa ser maior que o minímo.")
                 if normalizar:
-                    funcao.normaliza(st.session_state['dicionario_pandas'], x_min_escolido, x_max_escolido)
+                    funcao.normaliza(
+                        st.session_state["dicionario_pandas"],
+                        x_min_escolido,
+                        x_max_escolido,
+                    )
         with st.expander("Separar linhas"):
             st.write(
                 "A separação de linha apenas soma o valor no y, isso serve para dar um shift nos dados e melhorar a visualização, normalmente utilizado junto com a normalização dos dados."
             )
             separar = st.number_input("Valor de separação", min_value=0.00, step=0.01)
             if separar != 0:
-                funcao.separar(st.session_state['dicionario_pandas'], separar)
+                funcao.separar(st.session_state["dicionario_pandas"], separar)
 
 plot_final = funcao.criar_grafico_plotly(
-    st.session_state['dicionario_pandas'], st.session_state['coluna_x'], st.session_state['colunas_y'], st.session_state['usar_nome_arquivo']
+    st.session_state["dicionario_pandas"],
+    st.session_state["coluna_x"],
+    st.session_state["colunas_y"],
+    st.session_state["usar_nome_arquivo"],
 )  # criar classe grafico
 plot_final.grafico()
 
@@ -240,25 +257,26 @@ plot_final.fig.update_yaxes(zeroline=False, showgrid=grade, gridcolor=grcolor)
 if linha_eixos:
     plot_final.fig.update_xaxes(showline=True, linewidth=2, linecolor=txcolor)
     plot_final.fig.update_yaxes(showline=True, linewidth=2, linecolor=txcolor)
-    
-    
-    
+
 
 with st.expander("Personalização pelo gráfico"):
-        st.write("""Agora você pode personalizar o seu gráfico diretamente! Isso inclui mudar legendas, o local delas e até mesmo os nomes dos eixos. Mas, lembre-se: se você fizer alguma alteração fora do gráfico, todas essas personalizações serão resetadas. Portanto, é melhor fazer todas as suas personalizações no final. Se encontrar algum problema, por favor, avise!""")
-        if st.button("Personalização :chart_with_upwards_trend:"):
-            st.switch_page(r"pages\personalizacao.py")
+    st.write(
+        """Agora você pode personalizar o seu gráfico diretamente! Isso inclui mudar legendas, o local delas e até mesmo os nomes dos eixos. Mas, lembre-se: se você fizer alguma alteração fora do gráfico, todas essas personalizações serão resetadas. Portanto, é melhor fazer todas as suas personalizações no final. Se encontrar algum problema, por favor, avise!"""
+    )
+    if st.button("Personalização :chart_with_upwards_trend:"):
+        st.switch_page(r"pages\personalizacao.py")
 
 config = {
     "toImageButtonOptions": {
         "format": "png",  # one of png, svg, jpeg, webp
         "filename": "Plot_castorplot",
         "scale": 3,  # Multiply title/legend/axis/canvas sizes by this factor
-    }}
+    }
+}
 
 st.session_state["figura"] = plot_final
 
-st.plotly_chart(plot_final.fig, use_container_width=True,config=config)
+st.plotly_chart(plot_final.fig, use_container_width=True, config=config)
 
 with st.expander("Doação"):
     doacao_colunas = st.columns(2)
@@ -275,14 +293,14 @@ config = {
         "filename": "Plot_castorplot",
         "scale": 3,  # Multiply title/legend/axis/canvas sizes by this factor
     },
-    "edits":{
-        "annotationPosition":True,
-        "annotationTail":True,
-        "annotationText":True,
-        "axisTitleText":True,
-        "legendPosition":True,
-        "legendText":True,
-        "shapePosition":True,
-        "titleText":True,
-    }
+    "edits": {
+        "annotationPosition": True,
+        "annotationTail": True,
+        "annotationText": True,
+        "axisTitleText": True,
+        "legendPosition": True,
+        "legendText": True,
+        "shapePosition": True,
+        "titleText": True,
+    },
 }

@@ -1,37 +1,10 @@
 import streamlit as st
+import funcao
 
-# Dados da pagina
-st.set_page_config(
-    page_title="CastorPlot",
-    page_icon=r"imagem/CASTORPLOT.png",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+funcao.config_page()
 
+funcao.inicial()
 
-####################################Contatos################
-st.sidebar.image(r"imagem/CASTORPLOT.png")
-
-st.sidebar.title("Contato")
-
-st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
-st.sidebar.write("[E-mail](mailto:guidarianiapps@gmail.com)")
-st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
-st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
-st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
-
-st.sidebar.write("[Mais contatos](https://linktr.ee/guidariani)")
-
-
-st.sidebar.write("Autor: Guilherme Gurian Dariani")
-
-st.sidebar.write(
-    """Em nenhum caso o autor será responsável por quaisquer erros, resultados ou informações incorretas."""
-)
-
-
-# Importa bibliotecas
-import streamlit as st
 
 # Define a paleta de cores
 primary_color = "#0077b6"
@@ -39,6 +12,9 @@ secondary_color = "#95a5a6"
 
 # Título
 st.title("Castorplot")
+"Um site de plotagem de dados, para a Ilum. Para começar clique no botão a baixo."
+if st.button(":blue[**Importação**] :open_file_folder:", help="Vai para a página de importação"):
+        st.switch_page(r"pages\import.py")
 
 colunas = st.columns(2)
 
@@ -62,8 +38,6 @@ with colunas[0]:
     for benefit in benefits:
         st.markdown(f"- {benefit}")
 
-    if st.button(":blue[**Importação**] :open_file_folder:"):
-        st.switch_page(r"pages\import.py")
 with colunas[1]:
     # Header: Avisos
     st.header("Avisos")
@@ -90,7 +64,7 @@ with colunas[1]:
     )
 
     # Aviso 4
-    st.info(
+    st.success(
         """
     4) ***Não sou especialista em frontend***. Portanto, não espere algo bonito, apenas funcional. O foco do site é a utilidade e a praticidade.
     """

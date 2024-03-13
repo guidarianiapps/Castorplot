@@ -1,18 +1,23 @@
 import streamlit as st
 import funcao
 
+funcao.config_page()
 
-funcao.inicial()
+st.sidebar.image(r"imagem/CASTORPLOT.png")
+st.sidebar.header("Menu de páginas:")
+if st.sidebar.button("**Página inicial** :house:"):
+    st.switch_page("main.py")
+if st.sidebar.button(
+    "**Importação** :open_file_folder:"
+):
+    st.switch_page(r"pages\import.py")
+
+
 
 if "figura" not in st.session_state:
     st.session_state["figura"] = 0
 
 st.title("Tratamento e layout")
-if st.button(
-    "**Importação** :open_file_folder:", help="Volta para a página de importação"
-):
-    st.switch_page(r"pages\import.py")
-
 tratamento, layout = st.tabs(["Tratamento", "Layout"])
 
 with tratamento:
@@ -148,7 +153,7 @@ with layout:
                 fundo_transp = st.checkbox("Fundo transparente")
 
             with coluna_grid[0]:
-                if st.checkbox("Sem grid"):
+                if st.checkbox("Sem grid", value=True):
                     grade = False
                 else:
                     grade = True
@@ -165,7 +170,7 @@ with layout:
                 )
             with coluna_grid[1]:
                 grcolor = st.color_picker(
-                    "Escolha a cor para a grade", value="#FFFFFF", disabled=not grade
+                    "Escolha a cor para a grade", value="#000000", disabled=not grade
                 )
             with coluna_final[0]:
                 txcolor = st.color_picker(
@@ -173,6 +178,21 @@ with layout:
                 )
             with coluna_final[1]:
                 fonte = st.text_input("Qual fonte?", value="Arial")
+
+            st.subheader("Mudar cor das linhas")
+            coluna_cor_linha = st.columns(2)
+            with coluna_cor_linha[0]:
+                linha_cor = st.selectbox("Linha", st.session_state["names"].keys())
+            with coluna_cor_linha[1]:
+                color = st.color_picker(
+                    "Selecione a cor da linha.",
+                    help="A cor não está sincronizada.",value=st.session_state["color"][linha_cor]
+                )
+                st.session_state["color"][linha_cor] = color
+                for name, cor in st.session_state["color"].items():
+                    plot_final.fig.update_traces(
+                        line=dict(color=cor), selector=({"name": name})
+                    )
 
     with coluna_direita_layout:
         with st.expander("Local legenda"):
@@ -198,6 +218,7 @@ with layout:
             st.write(
                 """As vezes quando as linhas possuem legendas grandes o final da legenda é cortado, por enquanto é recomendado colocar alguns espaços no final do nome da coluna antes de mandar o arquivo. Isso será corrigido rapidamente."""
             )  # Mudar
+
 
 if ticks:
     plot_final.fig.update_layout(
@@ -250,9 +271,7 @@ if inverter_eixo_x:
 
 
 plot_final.fig.update_xaxes(zeroline=False, showgrid=grade, gridcolor=grcolor)
-
 plot_final.fig.update_yaxes(zeroline=False, showgrid=grade, gridcolor=grcolor)
-
 
 if linha_eixos:
     plot_final.fig.update_xaxes(showline=True, linewidth=2, linecolor=txcolor)
@@ -285,22 +304,3 @@ with st.expander("Doação"):
         st.image("imagem//pix.png", width=300)
     with doacao_colunas[1]:
         st.write("A chave é o email guidarianiapps@gmail.com")
-
-
-config = {
-    "toImageButtonOptions": {
-        "format": "png",  # one of png, svg, jpeg, webp
-        "filename": "Plot_castorplot",
-        "scale": 3,  # Multiply title/legend/axis/canvas sizes by this factor
-    },
-    "edits": {
-        "annotationPosition": True,
-        "annotationTail": True,
-        "annotationText": True,
-        "axisTitleText": True,
-        "legendPosition": True,
-        "legendText": True,
-        "shapePosition": True,
-        "titleText": True,
-    },
-}

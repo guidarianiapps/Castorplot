@@ -11,7 +11,7 @@ funcao.config_page()
 st.sidebar.image(r"imagem/CASTORPLOT.png")
 st.sidebar.header("Menu de páginas:")
 if st.sidebar.button("**Página inicial** :house:"):
-    st.switch_page("main.py")
+    st.switch_page("castorplot.py")
 
 ### Passar dados para as outras paginas
 if "usar_nome_arquivo" not in st.session_state:

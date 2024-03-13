@@ -4,7 +4,8 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
 from sympy import sympify, lambdify, symbols
-
+from matplotlib import pyplot as plt
+import matplotlib
 
 
 @st.cache_data
@@ -43,14 +44,13 @@ def importar(uploaded_file, ignor_cabecalho, delimitador, separador):
         return arquivos_pandas  # cria lista com todos os aquivos em pandas.
     else:  # para o programa se uploaded_file is None, não precisaria, pois já existe no programa esse if, porêm estava tendo aviso
         st.stop()
-        return dict()
 
 
 class criar_grafico_plotly:
     def __init__(self, dados_pandas, coluna_x, colunas_y, nome_arquivo):
         self.fig = go.Figure()
         self.dados = dados_pandas
-        self.names = []
+        self.names = {}
         self.coluna_x = coluna_x
         self.colunas_de_interrese = colunas_y
         self.nome_arquivo = nome_arquivo
@@ -64,17 +64,30 @@ class criar_grafico_plotly:
             figura: imagem gerada com plotly.
         """
         assert isinstance(self.dados, dict)
+
+        cmap, num, norm = self.mapa_cor()
+
         for key, valor in self.dados.items():
+
             colunas = valor.columns
             if len(colunas) == 2:
+                num += 1
                 self.fig = self.fig.add_trace(
                     go.Scatter(
-                        x=valor[colunas[0]], y=valor[colunas[1]], name=key, mode="lines"
+                        x=valor[colunas[0]],
+                        y=valor[colunas[1]],
+                        name=key,
+                        mode="lines",
+                        line=dict(color=matplotlib.colors.to_hex(cmap(norm(num)))),
                     )
                 )
-                self.names.append(key)
+                if key in self.names.keys():
+                    self.names[f"{key}_(1)"] = len(self.names)
+                else:
+                    self.names[key] = len(self.names)
             else:
                 for col in self.colunas_de_interrese:
+                    num += 1
                     if self.nome_arquivo:
                         nome = key
                     else:
@@ -85,9 +98,33 @@ class criar_grafico_plotly:
                             y=valor[col],
                             name=nome,
                             mode="lines",
+                            line=dict(color=matplotlib.colors.to_hex(cmap(norm(num)))),
                         )
                     )
-                    self.names.append(col)
+
+                    if nome in self.names.keys():
+                        self.names[f"{nome}_(1)"] = len(self.names)
+                    else:
+                        self.names[nome] = len(self.names)
+
+    def mapa_cor(self):
+        cmap = plt.get_cmap("cool")
+        num = 0
+        norm = plt.Normalize(
+            vmin=0,
+            vmax=sum(
+                [
+                    (
+                        len(valor.columns)
+                        if len(valor.columns) == 2
+                        else len(valor.columns) - 1
+                    )
+                    for valor in self.dados.values()
+                ]
+            ),
+        )
+        
+        return cmap,num,norm
 
 
 def reescreve_latex(string, mudar):
@@ -151,3 +188,34 @@ def limitar(dicionario, valor_min, valor_max):
         parametro_min = dicionario[chaves][x] >= valor_min
         parametro_max = dicionario[chaves][x] <= valor_max
         dicionario[chaves] = dicionario[chaves][parametro_min & parametro_max]
+
+
+def config_page():
+    # Dados da pagina
+    st.set_page_config(
+        page_title="CastorPlot",
+        page_icon=r"imagem/CASTORPLOT.png",
+        layout="wide",
+        initial_sidebar_state="expanded",
+    )
+
+
+def inicial():
+    ####################################Contatos################
+    st.sidebar.image(r"imagem/CASTORPLOT.png")
+
+    st.sidebar.title("Contato")
+
+    st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
+    st.sidebar.write("[E-mail](mailto:guidarianiapps@gmail.com)")
+    st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
+    st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
+    st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
+
+    st.sidebar.write("[Mais contatos](https://linktr.ee/guidariani)")
+
+    st.sidebar.write("Autor: Guilherme Gurian Dariani")
+
+    st.sidebar.write(
+        """Em nenhum caso o autor será responsável por quaisquer erros, resultados ou informações incorretas."""
+    )

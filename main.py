@@ -6,16 +6,27 @@ funcao.config_page()
 funcao.inicial()
 
 
-# Define a paleta de cores
-primary_color = "#0077b6"
-secondary_color = "#95a5a6"
-
 # Título
 st.title("Castorplot")
 "Um site de plotagem de dados, para a Ilum. Para começar clique no botão a baixo."
-if st.button(":blue[**Importação**] :open_file_folder:", help="Vai para a página de importação"):
-        st.switch_page(r"pages\import.py")
+if st.button(
+    ":blue[**Importação**] :open_file_folder:", help="Vai para a página de importação"
+):
+    st.switch_page(r"pages\import.py")
+with st.expander("Atualização"):
+    st.markdown(
+        """### O layout do site foi atualizado!
 
+Para facilitar a navegação, a barra de navegação foi movida para a lateral superior esquerda. Comece sua jornada clicando em "**Importação**".
+
+### Mais personalização:
+
+Agora você pode alterar as cores das linhas do gráfico para melhor visualização dos dados.
+
+### Fique ligado:
+
+Mais atualizações estão por vir para tornar sua experiência ainda melhor!"""
+    )
 colunas = st.columns(2)
 
 with colunas[0]:

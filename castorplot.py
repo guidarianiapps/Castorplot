@@ -15,9 +15,9 @@ if st.button(
     st.switch_page(r"pages/import.py")
 with st.expander("Atualização"):
     st.markdown(
-        """### O layout do site foi atualizado!
+        """### O layout foi atualizado!
 
-Para facilitar a navegação, a barra de navegação foi movida para a lateral superior esquerda. Comece sua jornada clicando em "**Importação**".
+Para facilitar a navegação, a barra de navegação foi movida para a lateral superior esquerda. Comece clicando em "**Importação**".
 
 ### Mais personalização:
 
@@ -82,7 +82,8 @@ with colunas[1]:
     )
 
 st.write(
-    """Este site gratuito oferece funções que muitos outros cobram para realizá-las.
+    """### Doação:
+Este site gratuito oferece funções que muitos outros cobram para realizá-las.
 Também é mantido por uma única pessoa, o que torna o trabalho difícil e demanda muito tempo.
 Sua contribuição é muito bem-vinda e ajudará a mantê-lo."""
 )

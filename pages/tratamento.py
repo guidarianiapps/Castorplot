@@ -10,7 +10,7 @@ if st.sidebar.button("**Página inicial** :house:"):
 if st.sidebar.button(
     "**Importação** :open_file_folder:"
 ):
-    st.switch_page(r"pages\import.py")
+    st.switch_page(r"pages/import.py")
 
 
 
@@ -283,7 +283,7 @@ with st.expander("Personalização pelo gráfico"):
         """Agora você pode personalizar o seu gráfico diretamente! Isso inclui mudar legendas, o local delas e até mesmo os nomes dos eixos. Mas, lembre-se: se você fizer alguma alteração fora do gráfico, todas essas personalizações serão resetadas. Portanto, é melhor fazer todas as suas personalizações no final. Se encontrar algum problema, por favor, avise!"""
     )
     if st.button("Personalização :chart_with_upwards_trend:"):
-        st.switch_page(r"pages\personalizacao.py")
+        st.switch_page(r"pages/personalizacao.py")
 
 config = {
     "toImageButtonOptions": {

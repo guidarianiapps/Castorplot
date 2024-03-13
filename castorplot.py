@@ -12,7 +12,7 @@ st.title("Castorplot")
 if st.button(
     ":blue[**Importação**] :open_file_folder:", help="Vai para a página de importação"
 ):
-    st.switch_page(r"pages\import.py")
+    st.switch_page(r"pages/import.py")
 with st.expander("Atualização"):
     st.markdown(
         """### O layout do site foi atualizado!

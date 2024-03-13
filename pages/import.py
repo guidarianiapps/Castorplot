@@ -54,8 +54,6 @@ with colunas_import[0]:
                  3) Separador decimal: é o parâmetro que será utilizado como separador decimal, é normalmente utilizado como "," ou ".".
                  """,
     )
-if st.sidebar.button("**Tratamento e layout** :wrench:"):
-    st.switch_page("pages/tratamento.py")
 
 # erros por falta de informação
 if separador == "" or delimitador == "":
@@ -141,6 +139,9 @@ with colunas_import[1]:
     )
     plot_teste.grafico()
     st.plotly_chart(plot_teste.fig, use_container_width=True)
+
+if st.sidebar.button("**Tratamento e layout** :wrench:"):
+    st.switch_page("pages/tratamento.py")
 
 norm = plt.Normalize(0, len(plot_teste.names))
 if "color" not in st.session_state:

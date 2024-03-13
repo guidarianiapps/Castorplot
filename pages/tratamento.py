@@ -19,7 +19,6 @@ if "figura" not in st.session_state:
 
 try:
     dicionario_pandas = st.session_state["dicionario_pandas"].copy()
-    st.write(dicionario_pandas)
 except:
     st.switch_page("castorplot.py")
 

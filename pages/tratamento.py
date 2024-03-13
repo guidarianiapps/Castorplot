@@ -19,7 +19,6 @@ if "figura" not in st.session_state:
 
 try:
     dicionario_pandas = st.session_state["dicionario_pandas"].copy()
-    st.write(dicionario_pandas)
 except:
     st.switch_page("castorplot.py")
 
@@ -286,7 +285,7 @@ if linha_eixos:
 
 with st.expander("Personalização pelo gráfico"):
     st.write(
-        """Agora você pode personalizar o seu gráfico diretamente! Isso inclui mudar legendas, o local delas e até mesmo os nomes dos eixos. Mas, lembre-se: se você fizer alguma alteração fora do gráfico, todas essas personalizações serão resetadas. Portanto, é melhor fazer todas as suas personalizações no final. Se encontrar algum problema, por favor, avise!"""
+        """Agora você pode personalizar o seu gráfico diretamente! Isso inclui mudar legendas, o local delas e até mesmo os nomes dos eixos. Tudo será resetado. Portanto, é melhor fazer todas as suas personalizações no final. Se encontrar algum problema, por favor, avise!"""
     )
     if st.button("Personalização :chart_with_upwards_trend:"):
         st.switch_page(r"pages/personalizacao.py")

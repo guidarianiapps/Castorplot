@@ -17,7 +17,10 @@ if st.sidebar.button(
 if "figura" not in st.session_state:
     st.session_state["figura"] = 0
 
-dicionario_pandas = st.session_state["dicionario_pandas"]
+try:
+    dicionario_pandas = st.session_state["dicionario_pandas"]
+except:
+    st.switch_page("castorplot.py")
 
 st.title("Tratamento e layout")
 tratamento, layout = st.tabs(["Tratamento", "Layout"])

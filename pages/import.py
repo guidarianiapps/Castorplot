@@ -72,9 +72,9 @@ chaves = dicionario_pandas.keys()  # nome de todos os arquivos que foram importa
 # Mudar nome das colunas
 colocar_botao = False
 for key in chaves:
+    st.write(dicionario_pandas[key].dtypes)
     if not (
-        all(dicionario_pandas[key].dtypes == "int64")
-        or all(dicionario_pandas[key].dtypes == "float64")
+        all(dicionario_pandas[key].dtypes != "object")
     ):
 
         st.warning(

@@ -1,5 +1,6 @@
 import streamlit as st
 import funcao
+import copy
 
 funcao.config_page()
 
@@ -18,7 +19,7 @@ if "figura" not in st.session_state:
     st.session_state["figura"] = 0
 
 try:
-    dicionario_pandas = st.session_state["dicionario_pandas"].copy()
+    dicionario_pandas = copy.deepcopy(st.session_state["dicionario_pandas"])
 except:
     st.switch_page("castorplot.py")
 

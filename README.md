@@ -1,6 +1,6 @@
 # Castorplot
 
-<img src="imagem\CASTORPLOT.png" width="200">
+<img src="imagem/CASTORPLOT.png" width="200">
 
 # Introdução
 
@@ -92,7 +92,7 @@ Sempre confira que seus dados não possuem letras e/ou palavras, o site não ir�
 
 Para mudar de tratamento para layout é apenas clicar na barra de escolha:
 
-![Tratamento e layout](imagem\Tratamento_layout.png)
+![Tratamento e layout](imagem/Tratamento_layout.png)
 
 ## Tratamento
 
@@ -120,7 +120,7 @@ Sempre na remoção da linha de base ocorrem pequenos erros, para melhorar isso 
 
 A separação de linha apenas soma o valor no y, isso permite dar um shift nos dados e melhorar a visualização, normalmente utilizado com a normalização dos dados.
 
-![Exemplo de imagem normalizada e com o valor de 0,5 no argumento, separar linhas e sem os números no eixo y. Imagem criada no site.](imagem\plot.png)
+![Exemplo de imagem normalizada e com o valor de 0,5 no argumento, separar linhas e sem os números no eixo y. Imagem criada no site.](imagem/plot.png)
 
 Exemplo de imagem normalizada e com o valor de 0,5 no argumento, separar linhas e sem os números no eixo y. Imagem criada no site.
 
@@ -167,7 +167,7 @@ Por se tratar de uma atualização muito nova podem ocorrer erros, se encontrar 
 
 O gráfico é construído usando a biblioteca [plotly](https://plotly.com/), para assim ser interativo. As ferramentas podem ser encontrada quando o mouse está no gráfico, elas aparecem no canto superior direito.
 
-![Menu do gráfico](imagem\grafico_menu.png)
+![Menu do gráfico](imagem/grafico_menu.png)
 
 
 ## Salvar imagem

@@ -174,12 +174,17 @@ def definir_max_min(dicionario):
     return maximo, minimo
 
 
-def separar(dicionario, valor):
+def separar(dicionario, valor,ys):
     espacamento = 0
     for chaves in dicionario.keys():
-        for coluna in dicionario[chaves].columns[1::]:
-            dicionario[chaves][coluna] = dicionario[chaves][coluna] + espacamento
-            espacamento += valor
+        if ys==0:
+            for coluna in dicionario[chaves].columns[1::]:
+                dicionario[chaves][coluna] = dicionario[chaves][coluna] + espacamento
+                espacamento += valor
+        else:
+            for coluna in ys:
+                dicionario[chaves][coluna] = dicionario[chaves][coluna] + espacamento
+                espacamento += valor
 
 
 def limitar(dicionario, valor_min, valor_max):
@@ -206,11 +211,10 @@ def inicial():
 
     st.sidebar.title("Contato")
 
-    st.sidebar.write("Envie erros, duvidas ou sugestões no email.")
-    st.sidebar.write("[E-mail](mailto:guidarianiapps@gmail.com)")
+    st.sidebar.write("Envie erros, duvidas ou sugestões no github do site.")
+    st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
     st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
     st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
-    st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
 
     st.sidebar.write("[Mais contatos](https://linktr.ee/guidariani)")
 

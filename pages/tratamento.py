@@ -107,7 +107,7 @@ with tratamento:
             )
             separar = st.number_input("Valor de separação", min_value=0.00, step=0.01)
             if separar != 0:
-                funcao.separar(dicionario_pandas, separar)
+                funcao.separar(dicionario_pandas, separar,st.session_state["colunas_y"])
 
 plot_final = funcao.criar_grafico_plotly(
     dicionario_pandas,
@@ -286,7 +286,7 @@ if linha_eixos:
 
 with st.expander("Personalização pelo gráfico"):
     st.write(
-        """Agora você pode personalizar o seu gráfico diretamente! Isso inclui mudar legendas, o local delas e até mesmo os nomes dos eixos. Tudo será resetado. Portanto, é melhor fazer todas as suas personalizações no final. Se encontrar algum problema, por favor, avise!"""
+        """Agora você pode personalizar o seu gráfico diretamente! Isso inclui mudar legendas, o local delas e até mesmo os nomes dos eixos. Porém, é melhor fazer todas as suas personalizações no final, porque se retornar a essa tela tudo será perdido (por enquanto). Se encontrar algum problema, por favor, avise!"""
     )
     if st.button("Personalização :chart_with_upwards_trend:"):
         st.switch_page(r"pages/personalizacao.py")

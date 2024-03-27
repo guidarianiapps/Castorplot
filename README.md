@@ -64,7 +64,7 @@ O menu se encontra na barra lateral a esquerda, se não estiver aparecendo é ap
 
 ## Parâmetros
 
-Linha do cabeçalho, define a linha que será utilizada como cabeçalho, automaticamente se a primeira linha tiver somente números os nomes serão trocados automaticamente. Futuramente poderá ser trocado o nome de cada linha diretamente no site.
+Linha do cabeçalho: define a linha que será utilizada como cabeçalho, automaticamente se a primeira linha tiver somente números os nomes serão trocados automaticamente. Futuramente poderá ser trocado o nome de cada linha diretamente no site.
 
 Delimitador de coluna: É o que mostra para o código onde é uma coluna e quando é outra, por padrão utiliza \t, pois é como se interpreta o "tab", outros parâmetros como "," e ";" é somente escrever, qualquer dúvida concute a [documentação](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html#:~:text=ou%20StringIO.-,sep,-str%2C%20padr%C3%A3o%20%27%2C%27).
 

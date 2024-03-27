@@ -212,7 +212,7 @@ def inicial():
     st.sidebar.title("Contato")
 
     st.sidebar.write("Envie erros, duvidas ou sugestões no github do site.")
-    st.sidebar.write("[GitHub deste site](https://github.com/guidarianiapps)")
+    st.sidebar.write("[GitHub e manual do site](https://github.com/guidarianiapps/Castorplot)")
     st.sidebar.write("[GitHub pessoal](https://github.com/guidariani)")
     st.sidebar.write("[GitHub acadêmico](https://github.com/guilhermeilum)")
 

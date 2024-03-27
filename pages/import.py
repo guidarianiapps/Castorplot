@@ -118,7 +118,7 @@ if len(colunas_primeiro_dataset) > 2:
         colunas_y = colunas_sem_X
 else:
     coluna_x = colunas_primeiro_dataset[0]
-    colunas_y = [colunas_primeiro_dataset[1]]
+    colunas_y = 0
     usar_nome_arquivo = False
 
 

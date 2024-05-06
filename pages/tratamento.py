@@ -31,7 +31,7 @@ with tratamento:
     with esquerda_tratamento:
         with st.expander("Intervalo de interesse"):
             x_max_interv, x_min_interv = funcao.definir_max_min(
-                dicionario_pandas, st.session_state["coluna_x"]
+                dicionario_pandas
             )
             st.write(
                 "O intervalo de interesse é onde será visualizado seu espectro, é recomendado delimitar a área de interesse."
@@ -82,7 +82,7 @@ with tratamento:
                 "A normalização por min max, utilizando somente as informações do intervalo determinado."
             )
             normalizacao_colunas_dentro = st.columns(2)
-            x_max, x_min = funcao.definir_max_min(dicionario_pandas, st.session_state["coluna_x"])
+            x_max, x_min = funcao.definir_max_min(dicionario_pandas)
             with normalizacao_colunas_dentro[1]:
                 x_min_escolido = st.number_input("Mínimo", x_min, x_max, value=x_min)
                 x_max_escolido = st.number_input("Máximo", x_min, x_max, value=x_max)

@@ -163,10 +163,9 @@ def normaliza(dicionario, x_min, x_max):
             )
 
 
-def definir_max_min(dicionario):
+def definir_max_min(dicionario, coluna):
     lista = []
     for df in dicionario.values():
-        coluna = df.columns[0]
         lista.append(df[coluna].min())
         lista.append(df[coluna].max())
     maximo = max(lista)

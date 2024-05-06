@@ -82,7 +82,7 @@ with tratamento:
                 "A normalização por min max, utilizando somente as informações do intervalo determinado."
             )
             normalizacao_colunas_dentro = st.columns(2)
-            x_max, x_min = funcao.definir_max_min(dicionario_pandas)
+            x_max, x_min = funcao.definir_max_min(dicionario_pandas, st.session_state["coluna_x"])
             with normalizacao_colunas_dentro[1]:
                 x_min_escolido = st.number_input("Mínimo", x_min, x_max, value=x_min)
                 x_max_escolido = st.number_input("Máximo", x_min, x_max, value=x_max)

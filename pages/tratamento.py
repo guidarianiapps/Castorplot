@@ -31,7 +31,7 @@ with tratamento:
     with esquerda_tratamento:
         with st.expander("Intervalo de interesse"):
             x_max_interv, x_min_interv = funcao.definir_max_min(
-                dicionario_pandas
+                dicionario_pandas, st.session_state["coluna_x"]
             )
             st.write(
                 "O intervalo de interesse é onde será visualizado seu espectro, é recomendado delimitar a área de interesse."

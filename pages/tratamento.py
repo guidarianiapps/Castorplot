@@ -131,12 +131,10 @@ with layout:
             titulo = st.text_input("Título do gráfico")
             coluna_leg_eixos = st.columns(2)
             with coluna_leg_eixos[0]:
-                leg_x = st.text_input(
-                    "Legenda eixo x", value="Raman Shift (cm<sup>-1</sup>)"
-                )
+                leg_x = st.text_input("Legenda eixo x")
 
             with coluna_leg_eixos[1]:
-                leg_y = st.text_input("Legenda eixo y", value="Intensity (au)")
+                leg_y = st.text_input("Legenda eixo y")
 
             coluna_opções_eixos = st.columns(2)
             with coluna_opções_eixos[0]:

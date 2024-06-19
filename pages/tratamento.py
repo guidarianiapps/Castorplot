@@ -8,11 +8,8 @@ st.sidebar.image(r"imagem/CASTORPLOT.png")
 st.sidebar.header("Menu de páginas:")
 if st.sidebar.button("**Página inicial** :house:"):
     st.switch_page("castorplot.py")
-if st.sidebar.button(
-    "**Importação** :open_file_folder:"
-):
+if st.sidebar.button("**Importação** :open_file_folder:"):
     st.switch_page(r"pages/import.py")
-
 
 
 if "figura" not in st.session_state:
@@ -30,9 +27,7 @@ with tratamento:
     esquerda_tratamento, direita_tratamento = st.columns(2)
     with esquerda_tratamento:
         with st.expander("Intervalo de interesse"):
-            x_max_interv, x_min_interv = funcao.definir_max_min(
-                dicionario_pandas
-            )
+            x_max_interv, x_min_interv = funcao.definir_max_min(dicionario_pandas)
             st.write(
                 "O intervalo de interesse é onde será visualizado seu espectro, é recomendado delimitar a área de interesse."
             )
@@ -63,18 +58,12 @@ with tratamento:
 
     if tirar_baseline_antes and tirar_baseline:
         funcao.baseline_remov(dicionario_pandas)
-        funcao.limitar(
-            dicionario_pandas, intervalo_minimo, intervalo_maximo
-        )
+        funcao.limitar(dicionario_pandas, intervalo_minimo, intervalo_maximo)
     elif not tirar_baseline_antes and tirar_baseline:
-        funcao.limitar(
-            dicionario_pandas, intervalo_minimo, intervalo_maximo
-        )
+        funcao.limitar(dicionario_pandas, intervalo_minimo, intervalo_maximo)
         funcao.baseline_remov(dicionario_pandas)
     else:
-        funcao.limitar(
-            dicionario_pandas, intervalo_minimo, intervalo_maximo
-        )
+        funcao.limitar(dicionario_pandas, intervalo_minimo, intervalo_maximo)
 
     with direita_tratamento:
         with st.expander("Normalização"):
@@ -107,7 +96,9 @@ with tratamento:
             )
             separar = st.number_input("Valor de separação", min_value=0.00, step=0.01)
             if separar != 0:
-                funcao.separar(dicionario_pandas, separar,st.session_state["colunas_y"])
+                funcao.separar(
+                    dicionario_pandas, separar, st.session_state["colunas_y"]
+                )
 
 plot_final = funcao.criar_grafico_plotly(
     dicionario_pandas,
@@ -178,12 +169,16 @@ with layout:
                 grcolor = st.color_picker(
                     "Escolha a cor para a grade", value="#000000", disabled=not grade
                 )
-            with coluna_final[0]:
+            coluna_final_2 = st.columns(3)
+            with coluna_final_2[0]:
                 txcolor = st.color_picker(
                     "Escolha a cor para o texto e linhas", value="#000000"
                 )
-            with coluna_final[1]:
+            with coluna_final_2[1]:
                 fonte = st.text_input("Qual fonte?", value="Arial")
+
+            with coluna_final_2[2]:
+                tamanho_fonte = st.number_input("Qual Tamanho?", value=12)
 
             st.subheader("Mudar cor das linhas")
             coluna_cor_linha = st.columns(2)
@@ -192,7 +187,8 @@ with layout:
             with coluna_cor_linha[1]:
                 color = st.color_picker(
                     "Selecione a cor da linha.",
-                    help="A cor não está sincronizada.",value=st.session_state["color"][linha_cor]
+                    help="A cor não está sincronizada.",
+                    value=st.session_state["color"][linha_cor],
                 )
                 st.session_state["color"][linha_cor] = color
                 for name, cor in st.session_state["color"].items():
@@ -247,7 +243,7 @@ plot_final.fig.update_layout(
         "paper_bgcolor": borda_bgcolor,
         "plot_bgcolor": bgcolor,
     },
-    font=dict(family=fonte),
+    font=dict(family=fonte, size=tamanho_fonte),
 )
 
 if tirar_y:
@@ -264,7 +260,6 @@ plot_final.fig.update_layout(
     xaxis_title_font=dict(color=txcolor),
     yaxis_title=leg_y,
     yaxis_title_font=dict(color=txcolor),
-    font=dict(size=10),
     legend=dict(
         x=leg_loc_x,
         y=leg_loc_y,
@@ -310,3 +305,6 @@ with st.expander("Doação"):
         st.image("imagem//pix.png", width=300)
     with doacao_colunas[1]:
         st.write("A chave é o email guidarianiapps@gmail.com")
+
+
+st.write(st.session_state)

@@ -72,9 +72,7 @@ chaves = dicionario_pandas.keys()  # nome de todos os arquivos que foram importa
 # Mudar nome das colunas
 colocar_botao = False
 for key in chaves:
-    if not (
-        all(dicionario_pandas[key].dtypes != "object")
-    ):
+    if not (all(dicionario_pandas[key].dtypes != "object")):
 
         st.warning(
             "Os dados não estão com o delimitador correto, o cabeçalho é em outra linha, o separador decimal está errado ou possue algum dado não numérico."
@@ -114,6 +112,25 @@ if len(colunas_primeiro_dataset) > 2:
                     colunas_sem_X,
                     disabled=botao_todas_colunas,
                 )
+        with st.expander("Filtrar dados"):
+            coluna_filtro = st.selectbox("Selecione a coluna X.", colunas_sem_X)
+            colunas_min_max_filtro = st.columns(2)
+            with colunas_min_max_filtro[0]:
+                min_filtro = st.number_input("Valor mínimo para o filtro")
+            with colunas_min_max_filtro[1]:
+                max_filtro = st.number_input("Valor máximo para o filtro")
+            if st.button("Aplicar filtro"):
+                for chave_filtro in dicionario_pandas.keys():
+                    parametro_min = (
+                        dicionario_pandas[chave_filtro][coluna_filtro] >= min_filtro
+                    )
+                    parametro_max = (
+                        dicionario_pandas[chave_filtro][coluna_filtro] <= max_filtro
+                    )
+                    dicionario_pandas[chave_filtro] = dicionario_pandas[chave_filtro][
+                        parametro_min & parametro_max
+                    ]
+
     if botao_todas_colunas:
         colunas_y = colunas_sem_X
 else:

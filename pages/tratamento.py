@@ -8,11 +8,8 @@ st.sidebar.image(r"imagem/CASTORPLOT.png")
 st.sidebar.header("Menu de páginas:")
 if st.sidebar.button("**Página inicial** :house:"):
     st.switch_page("castorplot.py")
-if st.sidebar.button(
-    "**Importação** :open_file_folder:"
-):
+if st.sidebar.button("**Importação** :open_file_folder:"):
     st.switch_page(r"pages/import.py")
-
 
 
 if "figura" not in st.session_state:
@@ -30,9 +27,7 @@ with tratamento:
     esquerda_tratamento, direita_tratamento = st.columns(2)
     with esquerda_tratamento:
         with st.expander("Intervalo de interesse"):
-            x_max_interv, x_min_interv = funcao.definir_max_min(
-                dicionario_pandas
-            )
+            x_max_interv, x_min_interv = funcao.definir_max_min(dicionario_pandas)
             st.write(
                 "O intervalo de interesse é onde será visualizado seu espectro, é recomendado delimitar a área de interesse."
             )
@@ -63,18 +58,12 @@ with tratamento:
 
     if tirar_baseline_antes and tirar_baseline:
         funcao.baseline_remov(dicionario_pandas)
-        funcao.limitar(
-            dicionario_pandas, intervalo_minimo, intervalo_maximo
-        )
+        funcao.limitar(dicionario_pandas, intervalo_minimo, intervalo_maximo)
     elif not tirar_baseline_antes and tirar_baseline:
-        funcao.limitar(
-            dicionario_pandas, intervalo_minimo, intervalo_maximo
-        )
+        funcao.limitar(dicionario_pandas, intervalo_minimo, intervalo_maximo)
         funcao.baseline_remov(dicionario_pandas)
     else:
-        funcao.limitar(
-            dicionario_pandas, intervalo_minimo, intervalo_maximo
-        )
+        funcao.limitar(dicionario_pandas, intervalo_minimo, intervalo_maximo)
 
     with direita_tratamento:
         with st.expander("Normalização"):
@@ -107,7 +96,9 @@ with tratamento:
             )
             separar = st.number_input("Valor de separação", min_value=0.00, step=0.01)
             if separar != 0:
-                funcao.separar(dicionario_pandas, separar,st.session_state["colunas_y"])
+                funcao.separar(
+                    dicionario_pandas, separar, st.session_state["colunas_y"]
+                )
 
 plot_final = funcao.criar_grafico_plotly(
     dicionario_pandas,
@@ -140,9 +131,25 @@ with layout:
             with coluna_opções_eixos[0]:
                 ticks = st.checkbox("Ticks", value=True)
                 linha_eixos = st.checkbox("Linha nos eixos", value=True)
+                n_fonte_eixos = st.number_input(
+                    "Qual o tamanho da fonte dos eixos?",
+                    value=12,
+                    help="Escolha o tamanho da fonte dos eixos, isso irá mudar o tamanho do eixo x e y.",
+                )
+                n_font_titulo = st.number_input(
+                    "Qual o tamanho da fonte do titulo?",
+                    value=12,
+                    help="Escolha o tamanho da fonte do titulo, isso irá mudar o tamanho do titulo.",
+                    disabled=(titulo=="")
+                )
             with coluna_opções_eixos[1]:
                 tirar_y = st.checkbox("Remover números do eixo y")
                 inverter_eixo_x = st.checkbox("Inverter eixo x")
+                n_fonte_numeros = st.number_input(
+                    "Qual o tamanho da fonte dos numeros nos eixos?",
+                    value=12,
+                    help="Escolha o tamanho da fonte dos eixos, isso irá mudar o tamanho do numeros nos eixo x e y.",
+                )
 
         with st.expander("Cores e fonte"):
             coluna_borda = st.columns(2)
@@ -190,7 +197,8 @@ with layout:
             with coluna_cor_linha[1]:
                 color = st.color_picker(
                     "Selecione a cor da linha.",
-                    help="A cor não está sincronizada.",value=st.session_state["color"][linha_cor]
+                    help="A cor não está sincronizada.",
+                    value=st.session_state["color"][linha_cor],
                 )
                 st.session_state["color"][linha_cor] = color
                 for name, cor in st.session_state["color"].items():
@@ -269,6 +277,19 @@ plot_final.fig.update_layout(
     ),
     legend_font=dict(color=txcolor),
 )
+
+plot_final.fig.update_layout(
+    title={"font": {"size": n_font_titulo}},  # Tamanho da fonte do título
+    xaxis={
+        "title": {"font": {"size": n_fonte_eixos}},
+        "tickfont": {"size": n_fonte_numeros},
+    },  # Tamanho da fonte do título do eixo X e dos números do eixo X
+    yaxis={
+        "title": {"font": {"size": n_fonte_eixos}},
+        "tickfont": {"size": n_fonte_numeros},
+    },  # Tamanho da fonte do título do eixo Y e dos números do eixo Y
+)
+
 
 if inverter_eixo_x:
     plot_final.fig.update_xaxes(autorange="reversed")

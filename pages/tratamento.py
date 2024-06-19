@@ -133,7 +133,7 @@ with layout:
                 linha_eixos = st.checkbox("Linha nos eixos", value=True)
                 n_fonte_eixos = st.number_input(
                     "Qual o tamanho da fonte dos eixos?",
-                    value=12,
+                    value=14,
                     help="Escolha o tamanho da fonte dos eixos, isso irá mudar o tamanho do eixo x e y.",
                 )
                 n_font_titulo = st.number_input(

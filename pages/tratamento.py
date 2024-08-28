@@ -129,7 +129,8 @@ with layout:
 
             coluna_opções_eixos = st.columns(2)
             with coluna_opções_eixos[0]:
-                ticks = st.checkbox("Ticks", value=True)
+                ticks_x = st.checkbox("Ticks x", value=True)
+                ticks_y = st.checkbox("Ticks y", value=True)
                 linha_eixos = st.checkbox("Linha nos eixos", value=True)
                 n_fonte_eixos = st.number_input(
                     "Qual o tamanho da fonte dos eixos?",
@@ -232,9 +233,13 @@ with layout:
             )  # Mudar
 
 
-if ticks:
+if ticks_x:
     plot_final.fig.update_layout(
         xaxis=dict(ticks="inside", tickfont=dict(color=txcolor), tickcolor=txcolor),
+    )
+
+if ticks_y:
+    plot_final.fig.update_layout(
         yaxis=dict(ticks="inside", tickfont=dict(color=txcolor), tickcolor=txcolor),
     )
 else:

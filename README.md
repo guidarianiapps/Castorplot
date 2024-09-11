@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/562315229.svg)](https://zenodo.org/doi/10.5281/zenodo.13743612)
+
 # Castorplot
 
 <img src="imagem/CASTORPLOT.png" width="200">

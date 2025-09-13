@@ -44,7 +44,7 @@ with colunas_import[0]:
 
     linha_final = st.number_input(
         "Linha final?",
-        value=0,
+        value=ignor_cabecalho,
         min_value=ignor_cabecalho,
         help="Linha final, define até qual linha será usada, se for 0 será considerado todo o dado.",
     )

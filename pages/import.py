@@ -42,14 +42,10 @@ with colunas_import[0]:
     )
 
     linha_final = st.number_input(
-        "Linha final (igual ao início = até o fim)?",
-        value=ignor_cabecalho,
-        min_value=ignor_cabecalho,
-        help="Linha final. Se for igual ao valor inicial (ignor_cabecalho), será considerado até o fim do arquivo.",
+        "Linha final",
+        value=0,
+        help="Linha final. Se for igual ao valor inicial (ignor_cabecalho), será considerado até o fim do arquivo. Se positivo é a linha contando do cabeçalho, se negativo é contando do final.",
     )
-
-    linha_final = None if linha_final == ignor_cabecalho else linha_final
-
 
     delimitador = st.text_input(
         "Qual é o delimitador de coluna?",

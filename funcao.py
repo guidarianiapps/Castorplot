@@ -8,51 +8,111 @@ from matplotlib import pyplot as plt
 import matplotlib
 
 @st.cache_data
-@st.cache_data
-def importar(uploaded_file, ignor_cabecalho, delimitador, separador, linha_final=None):
+def importar(uploaded_file, ignor_cabecalho, delimitador, separador, linha_final=0):
     """
-    Cria os dataframes pandas recebidos da variavel uploaded_file.
-
-    Args:
-        uploaded_file: Lista de dados importados para realizar a conversão para dataframes.
-        ignor_cabecalho: Linha do cabeçalho (1-based). Use 0 para indicar "sem cabeçalho".
-        delimitador: Delimitador das colunas.
-        separador: Separador decimal dos dados.
-        linha_final: Última linha a ser lida (1-based). Se None, lê até o fim.
-
-    Returns:
-        arquivos_pandas: Dicionário com os dataframes importados.
+    Lê arquivos CSV segundo a semântica:
+      - ignor_cabecalho: linha do cabeçalho (1-based). 0 = sem cabeçalho.
+      - linha_final: positivo = número de linhas a partir do início dos dados;
+                     negativo = posição contada a partir do final (-1 = última linha);
+                     0 = até o fim.
+    Retorna dicionário {nome_arquivo: DataFrame}.
     """
-    # header: None (sem header) ou 0-based index da linha do header
-    header = None if int(ignor_cabecalho) == 0 else int(ignor_cabecalho) - 1
+    import io
 
-    lista_nomes = []
+    ignor_cabecalho = int(ignor_cabecalho)
+    header = None if ignor_cabecalho == 0 else ignor_cabecalho - 1
+
     if uploaded_file is None:
         st.stop()
 
     arquivos_pandas = {}
+    lista_nomes = []
+
     for arquivo in uploaded_file:
         nome = arquivo.name.split(".")[0]
         lista_nomes.append(nome)
 
-        # Calcula nrows com base na semântica escolhida:
-        # - Se header é None (sem header): queremos ler até a linha `linha_final` (1-based),
-        #   então nrows = linha_final (porque leitura começa na linha 1).
-        # - Se header está em uma linha >0: pandas usa essa linha como header e os dados
-        #   começam na próxima linha; então nrows = linha_final - ignor_cabecalho.
-        nrows = None
-        if linha_final is not None:
-            linha_final = int(linha_final)
-            if header is None:
-                nrows = linha_final
-                if nrows <= 0:
-                    raise ValueError("linha_final deve ser >= 1")
+        # --- Determina número total de linhas apenas se linha_final < 0 ---
+        total_lines = None
+        if linha_final is not None and int(linha_final) < 0:
+            # lê todo o conteúdo para contar linhas; depois reseta ponteiro
+            try:
+                pos = arquivo.tell()
+            except Exception:
+                pos = None
+            arquivo.seek(0)
+            content = arquivo.read()
+            # content pode ser bytes ou str
+            if isinstance(content, bytes):
+                try:
+                    text = content.decode("utf-8")
+                except Exception:
+                    text = content.decode("latin-1", errors="ignore")
             else:
-                nrows = linha_final - int(ignor_cabecalho)
-                if nrows <= 0:
-                    raise ValueError("linha_final deve ser maior que a linha do cabeçalho (ignor_cabecalho)")
+                text = content
+            total_lines = len(text.splitlines())
+            # reset do ponteiro
+            try:
+                if pos is not None:
+                    arquivo.seek(pos)
+                else:
+                    arquivo.seek(0)
+            except Exception:
+                pass
 
-        # Leitura: NÃO usar skiprows para não causar deslocamento duplo
+        # --- Interpretação simples de linha_final ---
+        lf = None if (linha_final is None or int(linha_final) == 0) else int(linha_final)
+
+        # se lf é None -> ler até o fim (nrows=None)
+        nrows = None
+        if lf is not None:
+            if lf > 0:
+                # positivo -> ler lf linhas a partir da primeira linha de dados
+                nrows = lf
+            else:
+                # lf < 0 -> precisamos do total_lines
+                if total_lines is None:
+                    # contar se não contamos ainda
+                    try:
+                        pos = arquivo.tell()
+                    except Exception:
+                        pos = None
+                    arquivo.seek(0)
+                    cont = arquivo.read()
+                    if isinstance(cont, bytes):
+                        try:
+                            cont_text = cont.decode("utf-8")
+                        except Exception:
+                            cont_text = cont.decode("latin-1", errors="ignore")
+                    else:
+                        cont_text = cont
+                    total_lines = len(cont_text.splitlines())
+                    try:
+                        if pos is not None:
+                            arquivo.seek(pos)
+                        else:
+                            arquivo.seek(0)
+                    except Exception:
+                        pass
+
+                # -1 => última linha -> absolute_last_line = total_lines
+                absolute_last_line = total_lines + lf + 1
+                # primeira linha de dados (1-based)
+                first_data_line = 1 if header is None else ignor_cabecalho + 1
+                nrows = absolute_last_line - first_data_line + 1
+
+            if nrows is None or nrows <= 0:
+                raise ValueError(
+                    f"linha_final={linha_final} resulta em intervalo vazio. "
+                    f"Calcule uma linha_final válida (nrows={nrows})."
+                )
+
+        # --- Reset do ponteiro e leitura ---
+        try:
+            arquivo.seek(0)
+        except Exception:
+            pass
+
         df = pd.read_csv(
             arquivo,
             header=header,
@@ -61,15 +121,13 @@ def importar(uploaded_file, ignor_cabecalho, delimitador, separador, linha_final
             nrows=nrows
         )
 
-        # Garante nomes únicos
+        # nomes únicos
         if nome not in arquivos_pandas:
             arquivos_pandas[nome] = df
         else:
             arquivos_pandas[f"{nome}({lista_nomes.count(nome)-1})"] = df
 
     return arquivos_pandas
-
-
 
 class criar_grafico_plotly:
     def __init__(self, dados_pandas, coluna_x, colunas_y, nome_arquivo):

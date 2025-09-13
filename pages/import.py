@@ -48,7 +48,7 @@ with colunas_import[0]:
         min_value=ignor_cabecalho,
         help="Linha final, define até qual linha será usada, se for 0 será considerado todo o dado.",
     )
-    linha_final = linha_final if linha_final != 0 else None
+    linha_final = linha_final if (linha_final-ignor_cabecalho) != 0 else None
 
     delimitador = st.text_input(
         "Qual é o delimitador de coluna?",

@@ -41,14 +41,15 @@ with colunas_import[0]:
         help="Linha do cabeçalho, define a linha que será utilizada como cabeçalho, automaticamente se a primeira linha tiver somente números os nomes serão trocados automaticamente. Futuramente poderá ser trocado o nome de cada linha diretamente no site.",
     )
 
-
     linha_final = st.number_input(
-        "Linha final?",
+        "Linha final (igual ao início = até o fim)?",
         value=ignor_cabecalho,
         min_value=ignor_cabecalho,
-        help="Linha final, define até qual linha será usada, se for 0 será considerado todo o dado.",
+        help="Linha final. Se for igual ao valor inicial (ignor_cabecalho), será considerado até o fim do arquivo.",
     )
-    linha_final = linha_final if (linha_final-ignor_cabecalho) != 0 else None
+
+    linha_final = None if linha_final == ignor_cabecalho else linha_final
+
 
     delimitador = st.text_input(
         "Qual é o delimitador de coluna?",

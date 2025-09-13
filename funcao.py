@@ -8,57 +8,66 @@ from matplotlib import pyplot as plt
 import matplotlib
 
 @st.cache_data
+@st.cache_data
 def importar(uploaded_file, ignor_cabecalho, delimitador, separador, linha_final=None):
     """
     Cria os dataframes pandas recebidos da variavel uploaded_file.
+
     Args:
         uploaded_file: Lista de dados importados para realizar a conversão para dataframes.
-
-        ignor_cabecalho: Quantas linhas do cabeçalho devem ser ignoradas.
-
+        ignor_cabecalho: Linha do cabeçalho (1-based). Use 0 para indicar "sem cabeçalho".
         delimitador: Delimitador das colunas.
-
         separador: Separador decimal dos dados.
-
-        linha_final: Última linha a ser lida (contando a partir de 1). Se None, lê até o fim.
+        linha_final: Última linha a ser lida (1-based). Se None, lê até o fim.
 
     Returns:
         arquivos_pandas: Dicionário com os dataframes importados.
     """
-    # Corrige cabeçalho (linha que contém os nomes das colunas)
-    numero_cabecalho = None if int(ignor_cabecalho) == 0 else int(ignor_cabecalho) - 1
+    # header: None (sem header) ou 0-based index da linha do header
+    header = None if int(ignor_cabecalho) == 0 else int(ignor_cabecalho) - 1
 
     lista_nomes = []
-    if uploaded_file is not None:
-        arquivos_pandas = {}
-        for arquivo in uploaded_file:
-            nome = arquivo.name.split(".")[0]
-            lista_nomes.append(nome)
-
-            # Se for para parar em uma linha específica
-            nrows = None
-            if linha_final is not None:
-                nrows = int(linha_final) - int(ignor_cabecalho) + 1
-                if nrows <= 0:
-                    raise ValueError("linha_final deve ser maior que ignor_cabecalho")
-
-            df = pd.read_csv(
-                arquivo,
-                header=numero_cabecalho,
-                sep=delimitador,
-                decimal=separador,
-                skiprows=int(ignor_cabecalho) if int(ignor_cabecalho) > 0 else 0,
-                nrows=nrows
-            )
-
-            if nome not in arquivos_pandas.keys():
-                arquivos_pandas[nome] = df
-            else:
-                arquivos_pandas[nome + f"({lista_nomes.count(nome)-1})"] = df
-
-        return arquivos_pandas
-    else:
+    if uploaded_file is None:
         st.stop()
+
+    arquivos_pandas = {}
+    for arquivo in uploaded_file:
+        nome = arquivo.name.split(".")[0]
+        lista_nomes.append(nome)
+
+        # Calcula nrows com base na semântica escolhida:
+        # - Se header é None (sem header): queremos ler até a linha `linha_final` (1-based),
+        #   então nrows = linha_final (porque leitura começa na linha 1).
+        # - Se header está em uma linha >0: pandas usa essa linha como header e os dados
+        #   começam na próxima linha; então nrows = linha_final - ignor_cabecalho.
+        nrows = None
+        if linha_final is not None:
+            linha_final = int(linha_final)
+            if header is None:
+                nrows = linha_final
+                if nrows <= 0:
+                    raise ValueError("linha_final deve ser >= 1")
+            else:
+                nrows = linha_final - int(ignor_cabecalho)
+                if nrows <= 0:
+                    raise ValueError("linha_final deve ser maior que a linha do cabeçalho (ignor_cabecalho)")
+
+        # Leitura: NÃO usar skiprows para não causar deslocamento duplo
+        df = pd.read_csv(
+            arquivo,
+            header=header,
+            sep=delimitador,
+            decimal=separador,
+            nrows=nrows
+        )
+
+        # Garante nomes únicos
+        if nome not in arquivos_pandas:
+            arquivos_pandas[nome] = df
+        else:
+            arquivos_pandas[f"{nome}({lista_nomes.count(nome)-1})"] = df
+
+    return arquivos_pandas
 
 
 

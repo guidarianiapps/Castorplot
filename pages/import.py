@@ -41,6 +41,15 @@ with colunas_import[0]:
         help="Linha do cabeçalho, define a linha que será utilizada como cabeçalho, automaticamente se a primeira linha tiver somente números os nomes serão trocados automaticamente. Futuramente poderá ser trocado o nome de cada linha diretamente no site.",
     )
 
+
+    linha_final = st.number_input(
+        "Linha final?",
+        value=0,
+        min_value=ignor_cabecalho,
+        help="Linha final, define até qual linha será usada, se for 0 será considerado todo o dado.",
+    )
+    linha_final = linha_final if linha_final != 0 else None
+
     delimitador = st.text_input(
         "Qual é o delimitador de coluna?",
         value="\\t",
@@ -64,7 +73,7 @@ if separador == "" or delimitador == "":
     st.stop()
 
 dicionario_pandas = funcao.importar(
-    uploaded_file, ignor_cabecalho, delimitador, separador
+    uploaded_file, ignor_cabecalho, delimitador, separador, linha_final
 )  # criação do dicionario pandas
 
 

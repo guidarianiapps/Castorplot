@@ -7,43 +7,59 @@ from sympy import sympify, lambdify, symbols
 from matplotlib import pyplot as plt
 import matplotlib
 
-
 @st.cache_data
-def importar(uploaded_file, ignor_cabecalho, delimitador, separador):
+def importar(uploaded_file, ignor_cabecalho, delimitador, separador, linha_final=None):
     """
     Cria os dataframes pandas recebidos da variavel uploaded_file.
     Args:
         uploaded_file: Lista de dados importados para realizar a conversão para dataframes.
 
-        ignor_cabecalho: Quantas linhas do cabeçlho devem ser ignoradas
+        ignor_cabecalho: Quantas linhas do cabeçalho devem ser ignoradas.
 
         delimitador: Delimitador das colunas.
 
         separador: Separador decimal dos dados.
 
+        linha_final: Última linha a ser lida (contando a partir de 1). Se None, lê até o fim.
+
     Returns:
-        arquivos_pandas: Lista dos dataframes importados,
+        arquivos_pandas: Dicionário com os dataframes importados.
     """
-    numero_cabeçalho = (
-        None if int(ignor_cabecalho) == 0 else int(ignor_cabecalho) - 1
-    )  # Arrumar cabeçalho
+    # Corrige cabeçalho (linha que contém os nomes das colunas)
+    numero_cabecalho = None if int(ignor_cabecalho) == 0 else int(ignor_cabecalho) - 1
+
     lista_nomes = []
     if uploaded_file is not None:
         arquivos_pandas = {}
         for arquivo in uploaded_file:
             nome = arquivo.name.split(".")[0]
             lista_nomes.append(nome)
+
+            # Se for para parar em uma linha específica
+            nrows = None
+            if linha_final is not None:
+                nrows = int(linha_final) - int(ignor_cabecalho) + 1
+                if nrows <= 0:
+                    raise ValueError("linha_final deve ser maior que ignor_cabecalho")
+
+            df = pd.read_csv(
+                arquivo,
+                header=numero_cabecalho,
+                sep=delimitador,
+                decimal=separador,
+                skiprows=int(ignor_cabecalho) if int(ignor_cabecalho) > 0 else 0,
+                nrows=nrows
+            )
+
             if nome not in arquivos_pandas.keys():
-                arquivos_pandas[nome] = pd.read_csv(
-                    arquivo, header=numero_cabeçalho, sep=delimitador, decimal=separador
-                )
+                arquivos_pandas[nome] = df
             else:
-                arquivos_pandas[nome + f"({lista_nomes.count(nome)-1})"] = pd.read_csv(
-                    arquivo, header=numero_cabeçalho, sep=delimitador, decimal=separador
-                )
-        return arquivos_pandas  # cria lista com todos os aquivos em pandas.
-    else:  # para o programa se uploaded_file is None, não precisaria, pois já existe no programa esse if, porêm estava tendo aviso
+                arquivos_pandas[nome + f"({lista_nomes.count(nome)-1})"] = df
+
+        return arquivos_pandas
+    else:
         st.stop()
+
 
 
 class criar_grafico_plotly:
